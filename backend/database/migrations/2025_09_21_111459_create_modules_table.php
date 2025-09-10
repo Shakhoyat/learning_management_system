@@ -10,12 +10,14 @@ class CreateModulesTable extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->string('title');
-            $table->unsignedInteger('order_index')->default(0);
+            $table->text('description')->nullable();
+            $table->integer('order')->default(0);
+            $table->boolean('is_published')->default(true);
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->timestamps();
 
-            $table->index(['course_id', 'order_index']);
+            $table->index(['course_id', 'order']);
         });
     }
 

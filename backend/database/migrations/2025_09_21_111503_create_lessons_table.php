@@ -10,15 +10,23 @@ class CreateLessonsTable extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
             $table->string('title');
+            $table->text('description')->nullable();
             $table->longText('content')->nullable();
             $table->string('video_url')->nullable();
-            $table->integer('duration')->nullable(); // minutes
-            $table->unsignedInteger('order_index')->default(0);
+            $table->string('video_duration')->nullable();
+            $table->integer('duration_minutes')->nullable();
+            $table->integer('order')->default(0);
+            $table->enum('type', ['video', 'text', 'quiz', 'assignment'])->default('video');
+            $table->boolean('is_preview')->default(false);
+            $table->boolean('is_published')->default(true);
+            $table->json('resources')->nullable(); // downloadable files, links, etc.
+            $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
             $table->timestamps();
 
-            $table->index(['module_id', 'order_index']);
+            $table->index(['module_id', 'order']);
+            $table->index(['type']);
+            $table->index(['is_preview']);
         });
     }
 
