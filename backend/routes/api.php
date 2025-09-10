@@ -21,7 +21,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/forgot-password', [AuthController::class, 'sendPasswordResetLink']);
     Route::post('/reset-password', [AuthController::class, 'resetPassword']);
-    
+
     // Email verification routes
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
         ->middleware(['signed'])
@@ -43,15 +43,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/dashboard', function () {
             return response()->json(['message' => 'Admin dashboard data']);
         });
-        
+
         Route::get('/users', function () {
             return response()->json(['message' => 'All users data']);
         });
-        
+
         Route::post('/users/{user}/promote', function () {
             return response()->json(['message' => 'User promoted']);
         });
-        
+
         Route::delete('/users/{user}', function () {
             return response()->json(['message' => 'User deleted']);
         });
@@ -62,19 +62,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/dashboard', function () {
             return response()->json(['message' => 'Instructor dashboard data']);
         });
-        
+
         Route::get('/courses', function () {
             return response()->json(['message' => 'Instructor courses']);
         });
-        
+
         Route::post('/courses', function () {
             return response()->json(['message' => 'Course created']);
         });
-        
+
         Route::put('/courses/{course}', function () {
             return response()->json(['message' => 'Course updated']);
         });
-        
+
         Route::get('/students', function () {
             return response()->json(['message' => 'Enrolled students']);
         });
@@ -85,19 +85,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/dashboard', function () {
             return response()->json(['message' => 'Student dashboard data']);
         });
-        
+
         Route::get('/courses', function () {
             return response()->json(['message' => 'Enrolled courses']);
         });
-        
+
         Route::post('/courses/{course}/enroll', function () {
             return response()->json(['message' => 'Enrolled in course']);
         });
-        
+
         Route::get('/progress', function () {
             return response()->json(['message' => 'Learning progress']);
         });
-        
+
         Route::post('/courses/{course}/lessons/{lesson}/complete', function () {
             return response()->json(['message' => 'Lesson completed']);
         });
