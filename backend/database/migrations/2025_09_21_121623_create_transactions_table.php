@@ -17,22 +17,22 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->foreignId('enrollment_id')->nullable()->constrained('enrollments')->onDelete('set null');
-
+            
             $table->decimal('amount', 10, 2);
             $table->string('currency', 3)->default('USD');
             $table->enum('status', ['pending', 'processing', 'completed', 'failed', 'cancelled', 'refunded'])->default('pending');
-
+            
             $table->string('payment_method')->nullable(); // card, paypal, bank_transfer, etc.
             $table->string('payment_gateway')->nullable(); // stripe, paypal, razorpay, etc.
             $table->string('gateway_transaction_id')->nullable(); // Payment gateway's transaction ID
             $table->json('gateway_response')->nullable(); // Full gateway response
-
+            
             $table->timestamp('processed_at')->nullable();
             $table->timestamp('failed_at')->nullable();
             $table->text('failure_reason')->nullable();
-
+            
             $table->timestamps();
-
+            
             // Indexes for performance
             $table->index(['user_id', 'status']);
             $table->index(['course_id', 'status']);
