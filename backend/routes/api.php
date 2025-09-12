@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,11 @@ Route::prefix('auth')->group(function () {
         ->middleware(['signed'])
         ->name('verification.verify');
 });
+
+// Public course routes
+Route::get('/courses', [CourseController::class, 'index']);
+Route::get('/courses/{course}', [CourseController::class, 'show']);
+Route::get('/categories', [CourseController::class, 'categories']);
 
 // Protected routes - require authentication
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -63,17 +69,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             return response()->json(['message' => 'Instructor dashboard data']);
         });
 
-        Route::get('/courses', function () {
-            return response()->json(['message' => 'Instructor courses']);
-        });
-
-        Route::post('/courses', function () {
-            return response()->json(['message' => 'Course created']);
-        });
-
-        Route::put('/courses/{course}', function () {
-            return response()->json(['message' => 'Course updated']);
-        });
+        // Course management for instructors
+        Route::get('/courses', [CourseController::class, 'index']);
+        Route::post('/courses', [CourseController::class, 'store']);
+        Route::put('/courses/{course}', [CourseController::class, 'update']);
+        Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 
         Route::get('/students', function () {
             return response()->json(['message' => 'Enrolled students']);

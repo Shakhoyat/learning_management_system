@@ -29,7 +29,7 @@ class CreateCoursesTable extends Migration
             $table->foreignId('instructor_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->index(['title']);
             $table->index(['price']);
             $table->index(['is_published']);
