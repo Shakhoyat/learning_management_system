@@ -113,11 +113,4 @@ class Transaction extends Model
             'failed_at' => now(),
         ]);
     }
-}space App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Transaction extends Model
-{
-    //
 }

@@ -41,7 +41,6 @@ class SendEnrollmentConfirmationEmail implements ShouldQueue
                 'user_email' => $this->enrollment->user->email,
                 'course_title' => $this->enrollment->course->title
             ]);
-
         } catch (\Exception $e) {
             Log::error('Failed to send enrollment confirmation email', [
                 'enrollment_id' => $this->enrollment->id,

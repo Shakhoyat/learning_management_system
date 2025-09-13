@@ -119,11 +119,4 @@ class Course extends Model
     {
         return $this->enrollments()->count();
     }
-}space App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Course extends Model
-{
-    //
 }

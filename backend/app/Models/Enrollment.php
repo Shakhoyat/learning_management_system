@@ -120,11 +120,4 @@ class Enrollment extends Model
             $this->markAsCompleted();
         }
     }
-}space App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Enrollment extends Model
-{
-    //
 }
