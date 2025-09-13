@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\SendEnrollmentConfirmationEmail;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Transaction;
@@ -24,8 +23,8 @@ class EnrollmentController extends Controller
 
         // Check if already enrolled
         $existingEnrollment = Enrollment::where('user_id', $user->id)
-            ->where('course_id', $course->id)
-            ->first();
+                                      ->where('course_id', $course->id)
+                                      ->first();
 
         if ($existingEnrollment) {
             return response()->json([
@@ -88,20 +87,20 @@ class EnrollmentController extends Controller
             // Simulate payment processing for non-free courses
             if (!$course->isFree()) {
                 $paymentResult = $this->simulatePaymentProcessing($transaction, $request->payment_details);
-
+                
                 if ($paymentResult['success']) {
                     $transaction->markAsCompleted(
                         'sim_' . strtoupper(Str::random(10)),
                         $paymentResult
                     );
-
+                    
                     $enrollment->update(['payment_status' => Enrollment::PAYMENT_PAID]);
                 } else {
                     $transaction->markAsFailed(
                         $paymentResult['error'] ?? 'Payment failed',
                         $paymentResult
                     );
-
+                    
                     throw new \Exception('Payment processing failed: ' . $paymentResult['error']);
                 }
             } else {
@@ -111,18 +110,19 @@ class EnrollmentController extends Controller
 
             DB::commit();
 
-            // Queue enrollment confirmation email
-            SendEnrollmentConfirmationEmail::dispatch($enrollment);
-
+            // Queue enrollment confirmation email (to be implemented)
+            
             $enrollment->load(['course', 'user']);
+
             return response()->json([
                 'message' => 'Successfully enrolled in course',
                 'enrollment' => $enrollment,
                 'transaction' => $transaction
             ], 201);
+
         } catch (\Exception $e) {
             DB::rollBack();
-
+            
             return response()->json([
                 'message' => 'Enrollment failed',
                 'error' => $e->getMessage()
@@ -136,9 +136,9 @@ class EnrollmentController extends Controller
     public function getUserEnrollments(Request $request)
     {
         $user = Auth::user();
-
+        
         $query = Enrollment::with(['course.instructor', 'course.category'])
-            ->where('user_id', $user->id);
+                          ->where('user_id', $user->id);
 
         // Filter by status
         if ($request->has('status')) {
