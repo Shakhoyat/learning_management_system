@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\EnrollmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -86,12 +87,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
             return response()->json(['message' => 'Student dashboard data']);
         });
 
+        // Enrollment routes
+        Route::get('/enrollments', [EnrollmentController::class, 'getUserEnrollments']);
+        Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'enrollInCourse']);
+
         Route::get('/courses', function () {
             return response()->json(['message' => 'Enrolled courses']);
-        });
-
-        Route::post('/courses/{course}/enroll', function () {
-            return response()->json(['message' => 'Enrolled in course']);
         });
 
         Route::get('/progress', function () {
