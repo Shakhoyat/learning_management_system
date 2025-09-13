@@ -35,11 +35,4 @@ class Category extends Model
     {
         return $this->hasMany(Course::class)->where('is_published', true);
     }
-}space App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Category extends Model
-{
-    //
 }

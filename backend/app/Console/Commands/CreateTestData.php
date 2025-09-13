@@ -106,7 +106,7 @@ class CreateTestData extends Command
         $this->info('Created courses:');
         $this->info('- Free course: ' . $freeCourse->title . ' (ID: ' . $freeCourse->id . ')');
         $this->info('- Paid course: ' . $paidCourse->title . ' (ID: ' . $paidCourse->id . ')');
-
+        
         $this->info('Test data created successfully!');
         $this->info('');
         $this->info('You can now test enrollment with these courses:');

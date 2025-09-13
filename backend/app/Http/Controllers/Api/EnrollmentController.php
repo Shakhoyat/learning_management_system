@@ -113,8 +113,9 @@ class EnrollmentController extends Controller
 
             // Queue enrollment confirmation email
             SendEnrollmentConfirmationEmail::dispatch($enrollment);
-            
-            $enrollment->load(['course', 'user']);            return response()->json([
+
+            $enrollment->load(['course', 'user']);
+            return response()->json([
                 'message' => 'Successfully enrolled in course',
                 'enrollment' => $enrollment,
                 'transaction' => $transaction
