@@ -45,11 +45,4 @@ class Module extends Model
     {
         return $this->lessons()->sum('duration_minutes');
     }
-}space App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Module extends Model
-{
-    //
 }
