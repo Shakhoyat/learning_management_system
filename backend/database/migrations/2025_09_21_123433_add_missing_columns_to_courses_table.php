@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('courses', function (Blueprint $table) {
-            //
+            $table->string('slug')->unique()->after('title');
+            $table->string('short_description')->nullable()->after('slug');
+            $table->decimal('discount_price', 10, 2)->nullable()->after('price');
+            $table->string('level')->default('beginner')->after('description');
+            $table->integer('duration_hours')->nullable()->after('level');
+            $table->integer('max_students')->nullable()->after('duration_hours');
+            $table->boolean('is_featured')->default(false)->after('is_active');
         });
     }
 
@@ -22,7 +28,15 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('courses', function (Blueprint $table) {
-            //
+            $table->dropColumn([
+                'slug',
+                'short_description',
+                'discount_price',
+                'level',
+                'duration_hours',
+                'max_students',
+                'is_featured'
+            ]);
         });
     }
 };
