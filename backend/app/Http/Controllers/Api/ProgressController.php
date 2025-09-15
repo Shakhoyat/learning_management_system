@@ -23,9 +23,9 @@ class ProgressController extends Controller
 
         // Check if user is enrolled in the course
         $enrollment = Enrollment::where('user_id', $user->id)
-                               ->where('course_id', $lesson->module->course_id)
-                               ->where('status', Enrollment::STATUS_ACTIVE)
-                               ->first();
+            ->where('course_id', $lesson->module->course_id)
+            ->where('status', Enrollment::STATUS_ACTIVE)
+            ->first();
 
         if (!$enrollment) {
             return response()->json([
@@ -69,10 +69,9 @@ class ProgressController extends Controller
                 'progress' => $progress,
                 'course_progress' => $this->getCourseProgressSummary($user->id, $lesson->module->course_id)
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return response()->json([
                 'message' => 'Failed to mark lesson as completed',
                 'error' => $e->getMessage()
@@ -89,8 +88,8 @@ class ProgressController extends Controller
 
         // Check if user is enrolled
         $enrollment = Enrollment::where('user_id', $user->id)
-                               ->where('course_id', $course->id)
-                               ->first();
+            ->where('course_id', $course->id)
+            ->first();
 
         if (!$enrollment) {
             return response()->json([
@@ -119,11 +118,11 @@ class ProgressController extends Controller
 
         // Get recent activity (last 10 completed lessons)
         $recentActivity = Progress::with(['lesson.module.course'])
-                                ->where('user_id', $user->id)
-                                ->whereNotNull('completed_at')
-                                ->orderBy('completed_at', 'desc')
-                                ->limit(10)
-                                ->get();
+            ->where('user_id', $user->id)
+            ->whereNotNull('completed_at')
+            ->orderBy('completed_at', 'desc')
+            ->limit(10)
+            ->get();
 
         // Calculate total statistics
         $totalStats = DB::select("
@@ -162,7 +161,7 @@ class ProgressController extends Controller
 
         // Get courses taught by this instructor
         $courseQuery = Course::where('instructor_id', $user->id);
-        
+
         if ($user->isAdmin()) {
             // Admins can see all courses
             $courseQuery = Course::query();
@@ -305,10 +304,10 @@ class ProgressController extends Controller
     private function updateEnrollmentProgress(Enrollment $enrollment)
     {
         $progressData = Progress::getCourseProgress($enrollment->user_id, $enrollment->course_id);
-        
+
         if (!empty($progressData)) {
             $completionPercentage = $progressData[0]->completion_percentage ?? 0;
-            
+
             $enrollment->updateProgress($completionPercentage);
         }
     }

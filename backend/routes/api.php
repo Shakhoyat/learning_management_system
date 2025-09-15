@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\EnrollmentController;
+use App\Http\Controllers\Api\ProgressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -76,6 +77,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/courses/{course}', [CourseController::class, 'update']);
         Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 
+        // Progress analytics for instructors
+        Route::get('/analytics', [ProgressController::class, 'getInstructorAnalytics']);
+        Route::get('/courses/{course}/students/progress', [ProgressController::class, 'getCourseStudentProgress']);
+
         Route::get('/students', function () {
             return response()->json(['message' => 'Enrolled students']);
         });
@@ -91,16 +96,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/enrollments', [EnrollmentController::class, 'getUserEnrollments']);
         Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'enrollInCourse']);
 
+        // Progress tracking routes
+        Route::get('/analytics', [ProgressController::class, 'getUserAnalytics']);
+        Route::get('/courses/{course}/progress', [ProgressController::class, 'getCourseProgress']);
+        Route::post('/lessons/{lesson}/complete', [ProgressController::class, 'completeLesson']);
+
         Route::get('/courses', function () {
             return response()->json(['message' => 'Enrolled courses']);
-        });
-
-        Route::get('/progress', function () {
-            return response()->json(['message' => 'Learning progress']);
-        });
-
-        Route::post('/courses/{course}/lessons/{lesson}/complete', function () {
-            return response()->json(['message' => 'Lesson completed']);
         });
     });
 

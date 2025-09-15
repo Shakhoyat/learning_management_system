@@ -55,9 +55,9 @@ class Lesson extends Model
     public function isCompletedBy($userId)
     {
         return $this->progress()
-                   ->where('user_id', $userId)
-                   ->whereNotNull('completed_at')
-                   ->exists();
+            ->where('user_id', $userId)
+            ->whereNotNull('completed_at')
+            ->exists();
     }
 
     /**
@@ -66,14 +66,14 @@ class Lesson extends Model
     public function getCompletionRate()
     {
         $totalEnrolled = $this->module->course->enrollments()->count();
-        
+
         if ($totalEnrolled === 0) {
             return 0;
         }
 
         $completedCount = $this->progress()
-                             ->whereNotNull('completed_at')
-                             ->count();
+            ->whereNotNull('completed_at')
+            ->count();
 
         return round(($completedCount / $totalEnrolled) * 100, 2);
     }
