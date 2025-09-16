@@ -127,15 +127,15 @@ class Course extends Model
     public function getProgressForUser($userId)
     {
         $totalLessons = $this->lessons()->count();
-        
+
         if ($totalLessons === 0) {
             return 0;
         }
 
         $completedLessons = Progress::whereIn('lesson_id', $this->lessons()->pluck('id'))
-                                  ->where('user_id', $userId)
-                                  ->whereNotNull('completed_at')
-                                  ->count();
+            ->where('user_id', $userId)
+            ->whereNotNull('completed_at')
+            ->count();
 
         return round(($completedLessons / $totalLessons) * 100, 2);
     }
@@ -146,7 +146,7 @@ class Course extends Model
     public function getCompletionStatistics()
     {
         $totalStudents = $this->enrollments()->count();
-        
+
         if ($totalStudents === 0) {
             return [
                 'total_students' => 0,
@@ -181,7 +181,7 @@ class Course extends Model
         foreach ($studentProgress as $progress) {
             $percentage = $progress->completion_percentage;
             $totalCompletion += $percentage;
-            
+
             if ($percentage == 100) {
                 $completed++;
             } elseif ($percentage > 0) {
