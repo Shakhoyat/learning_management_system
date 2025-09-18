@@ -47,10 +47,14 @@ try {
         'price' => 99.99,
         'duration_hours' => 40,
         'level' => 'beginner',
-        'status' => 'published',
+        'language' => 'English',
+        'is_published' => true,
         'is_featured' => true,
+        'category_id' => $category->id,
         'instructor_id' => $instructor->id,
         'max_students' => 100,
+        'requirements' => ['Basic computer skills', 'Internet connection'],
+        'what_you_learn' => ['JavaScript syntax', 'DOM manipulation', 'Async programming'],
     ]);
     echo "✅ Created course: {$course->title}\n";
 
@@ -129,6 +133,7 @@ try {
         echo "• 5 Progress records\n";
     }
     echo "\n🚀 Ready to test the Progress Tracking API!\n";
+
 } catch (Exception $e) {
     echo "❌ Error creating test data: " . $e->getMessage() . "\n";
     echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
