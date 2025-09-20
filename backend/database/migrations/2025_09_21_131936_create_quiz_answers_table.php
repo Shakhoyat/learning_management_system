@@ -13,19 +13,7 @@ return new class extends Migration
     {
         Schema::create('quiz_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quiz_attempt_id')->constrained('quiz_attempts')->onDelete('cascade');
-            $table->foreignId('quiz_question_id')->constrained('quiz_questions')->onDelete('cascade');
-            $table->json('answer'); // Student's answer(s): [0,2] for MCQ, [true] for T/F, ["text answer"] for short
-            $table->boolean('is_correct')->nullable();
-            $table->decimal('points_earned', 8, 2)->nullable();
-            $table->decimal('points_possible', 8, 2);
-            $table->text('feedback')->nullable(); // Automatic or manual feedback
             $table->timestamps();
-
-            $table->index(['quiz_attempt_id']);
-            $table->index(['quiz_question_id']);
-            $table->index(['is_correct']);
-            $table->unique(['quiz_attempt_id', 'quiz_question_id']);
         });
     }
 
