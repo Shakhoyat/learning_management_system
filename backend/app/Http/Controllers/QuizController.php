@@ -21,7 +21,7 @@ class QuizController extends Controller
     public function index(Request $request, Lesson $lesson): JsonResponse
     {
         $user = Auth::user();
-        
+
         $quizzes = $lesson->quizzes()
             ->when(!$user->hasRole('instructor'), function ($query) {
                 $query->where('is_published', true);
@@ -29,7 +29,7 @@ class QuizController extends Controller
             ->with(['questions' => function ($query) use ($user) {
                 if (!$user->hasRole('instructor')) {
                     $query->select('id', 'quiz_id', 'type', 'question', 'options', 'points', 'order_position')
-                          ->whereNull('correct_answers'); // Hide correct answers from students
+                        ->whereNull('correct_answers'); // Hide correct answers from students
                 }
             }])
             ->withCount('questions')
@@ -90,7 +90,6 @@ class QuizController extends Controller
                 'message' => 'Quiz created successfully',
                 'data' => $quiz->load('questions')
             ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -124,7 +123,7 @@ class QuizController extends Controller
         if (!$user->hasRole('instructor')) {
             $quiz->load(['attempts' => function ($query) use ($user) {
                 $query->where('user_id', $user->id)
-                      ->orderBy('attempt_number', 'desc');
+                    ->orderBy('attempt_number', 'desc');
             }]);
         }
 
