@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\EnrollmentController;
 use App\Http\Controllers\Api\ProgressController;
+use App\Http\Controllers\QuizController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -101,8 +102,34 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/courses/{course}/progress', [ProgressController::class, 'getCourseProgress']);
         Route::post('/lessons/{lesson}/complete', [ProgressController::class, 'completeLesson']);
 
+        // Quiz routes for students
+        Route::prefix('lessons/{lesson}/quizzes')->group(function () {
+            Route::get('/', [QuizController::class, 'index']);
+            Route::get('/{quiz}', [QuizController::class, 'show']);
+            Route::post('/{quiz}/attempts', [QuizController::class, 'startAttempt']);
+        });
+
+        Route::prefix('quiz-attempts/{attempt}')->group(function () {
+            Route::post('/answers', [QuizController::class, 'submitAnswer']);
+            Route::post('/submit', [QuizController::class, 'submitQuiz']);
+        });
+
         Route::get('/courses', function () {
             return response()->json(['message' => 'Enrolled courses']);
+        });
+    });
+
+    // Instructor routes
+    Route::prefix('instructor')->middleware(['role:instructor'])->group(function () {
+        Route::get('/analytics', [ProgressController::class, 'getInstructorAnalytics']);
+        Route::get('/courses/{course}/students', [ProgressController::class, 'getCourseStudentProgress']);
+
+        // Quiz management for instructors
+        Route::prefix('lessons/{lesson}/quizzes')->group(function () {
+            Route::post('/', [QuizController::class, 'store']);
+            Route::put('/{quiz}', [QuizController::class, 'update']);
+            Route::delete('/{quiz}', [QuizController::class, 'destroy']);
+            Route::get('/{quiz}/analytics', [QuizController::class, 'getAnalytics']);
         });
     });
 

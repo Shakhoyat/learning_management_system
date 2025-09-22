@@ -21,7 +21,7 @@ class QuizGradingService
         foreach ($attempt->quizAnswers as $answer) {
             $questionResult = $this->gradeAnswer($answer);
             $results[] = $questionResult;
-
+            
             $totalPoints += $questionResult['points_possible'];
             $earnedPoints += $questionResult['points_earned'];
         }
@@ -52,7 +52,7 @@ class QuizGradingService
     {
         $question = $answer->quizQuestion;
         $isCorrect = $this->checkAnswer($question, $answer->answer);
-
+        
         $pointsEarned = $isCorrect ? $question->points : 0;
         $feedback = $this->generateFeedback($question, $isCorrect, $answer->answer);
 
@@ -95,11 +95,11 @@ class QuizGradingService
     private function checkMultipleChoice(QuizQuestion $question, array $userAnswer): bool
     {
         $correctAnswers = $question->correct_answers;
-
+        
         // Sort both arrays for comparison
         sort($userAnswer);
         sort($correctAnswers);
-
+        
         return $userAnswer === $correctAnswers;
     }
 
@@ -139,11 +139,11 @@ class QuizGradingService
 
         foreach ($correctAnswers as $correctAnswer) {
             $correctText = trim($correctAnswer);
-
-            $isMatch = $question->case_sensitive
+            
+            $isMatch = $question->case_sensitive 
                 ? $userText === $correctText
                 : strcasecmp($userText, $correctText) === 0;
-
+                
             if ($isMatch) {
                 return true;
             }
@@ -162,7 +162,7 @@ class QuizGradingService
         }
 
         $feedback = 'Incorrect. ';
-
+        
         if ($question->explanation) {
             $feedback .= $question->explanation;
         } else {
@@ -186,14 +186,14 @@ class QuizGradingService
                     }
                 }
                 return 'The correct answer(s): ' . implode(', ', $correctOptions);
-
+                
             case 'true_false':
                 $correctAnswer = $question->correct_answers[0] ? 'True' : 'False';
                 return "The correct answer is: {$correctAnswer}";
-
+                
             case 'short_answer':
                 return 'Acceptable answers include: ' . implode(', ', $question->correct_answers);
-
+                
             default:
                 return 'Please review the material and try again.';
         }

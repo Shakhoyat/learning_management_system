@@ -50,6 +50,14 @@ class Lesson extends Model
     }
 
     /**
+     * Get the quizzes for this lesson.
+     */
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    /**
      * Check if lesson is completed by a specific user
      */
     public function isCompletedBy($userId)
