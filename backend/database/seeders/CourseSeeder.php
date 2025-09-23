@@ -18,7 +18,7 @@ class CourseSeeder extends Seeder
     {
         // Get or create an instructor
         $instructor = User::where('email', 'instructor@example.com')->first();
-        
+
         if (!$instructor) {
             $instructor = User::create([
                 'name' => 'John Instructor',
