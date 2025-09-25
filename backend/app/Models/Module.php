@@ -12,14 +12,14 @@ class Module extends Model
     protected $fillable = [
         'title',
         'description',
-        'order',
+        'order_index',
         'course_id',
         'is_published',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
-        'order' => 'integer',
+        'order_index' => 'integer',
     ];
 
     /**

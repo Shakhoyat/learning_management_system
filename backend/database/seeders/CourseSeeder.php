@@ -34,9 +34,13 @@ class CourseSeeder extends Seeder
             ['title' => 'Complete Web Development Course'],
             [
                 'description' => 'Learn web development from basics to advanced concepts',
+                'short_description' => 'Master web development skills',
+                'slug' => 'complete-web-development-course',
                 'price' => 199.99,
                 'instructor_id' => $instructor->id,
-                'is_published' => true,
+                'level' => 'beginner',
+                'duration_hours' => 40,
+                'status' => 'published',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
