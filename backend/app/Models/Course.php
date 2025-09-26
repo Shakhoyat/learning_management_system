@@ -60,7 +60,7 @@ class Course extends Model
      */
     public function modules()
     {
-        return $this->hasMany(Module::class)->orderBy('order');
+        return $this->hasMany(Module::class)->orderBy('order_index');
     }
 
     /**

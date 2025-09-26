@@ -81,7 +81,6 @@ class CourseSeeder extends Seeder
             $module = $course->modules()->updateOrCreate(
                 ['title' => $moduleData['title']],
                 [
-                    'description' => $moduleData['description'],
                     'order_index' => $index + 1,
                 ]
             );

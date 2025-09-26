@@ -35,7 +35,7 @@ class Module extends Model
      */
     public function lessons()
     {
-        return $this->hasMany(Lesson::class)->orderBy('order');
+        return $this->hasMany(Lesson::class)->orderBy('order_index');
     }
 
     /**
