@@ -90,9 +90,8 @@ class CourseSeeder extends Seeder
                     ['title' => $lessonData['title']],
                     [
                         'content' => $lessonData['content'],
-                        'duration_minutes' => $lessonData['duration_minutes'],
+                        'duration' => $lessonData['duration_minutes'],
                         'order_index' => $lessonIndex + 1,
-                        'is_published' => true,
                     ]
                 );
             }
