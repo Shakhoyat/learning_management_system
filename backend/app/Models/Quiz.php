@@ -7,10 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Quiz extends Model
 {
     protected $fillable = [
-        'title', 'description', 'instructions', 'lesson_id',
-        'time_limit_minutes', 'max_attempts', 'passing_score',
-        'shuffle_questions', 'show_results_immediately', 'allow_review',
-        'is_published', 'available_from', 'available_until'
+        'title',
+        'description',
+        'instructions',
+        'lesson_id',
+        'time_limit_minutes',
+        'max_attempts',
+        'passing_score',
+        'shuffle_questions',
+        'show_results_immediately',
+        'allow_review',
+        'is_published',
+        'available_from',
+        'available_until'
     ];
 
     protected $casts = [
