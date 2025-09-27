@@ -1,130 +1,52 @@
-<?php
+<?php<?php
 
-namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class QuizQuestion extends Model
-{
-    use HasFactory;
+namespace App\Models;namespace App\Models;
 
-    protected $fillable = [
-        'quiz_id',
-        'type',
-        'question',
-        'options',
-        'correct_answers',
-        'explanation',
-        'points',
-        'order_position',
-        'case_sensitive',
-    ];
 
-    protected $casts = [
-        'options' => 'array',
-        'correct_answers' => 'array',
-        'points' => 'decimal:2',
-        'case_sensitive' => 'boolean',
-    ];
 
-    /**
-     * Get the quiz that owns the question.
-     */
-    public function quiz(): BelongsTo
-    {
-        return $this->belongsTo(Quiz::class);
-    }
+use Illuminate\Database\Eloquent\Model;use Illuminate\Database\Eloquent\Model;
 
-    /**
-     * Get the answers for the question.
-     */
-    public function answers(): HasMany
-    {
-        return $this->hasMany(QuizAnswer::class);
-    }
 
-    /**
-     * Check if the given answer is correct.
-     */
-    public function isCorrectAnswer(array $userAnswer): bool
-    {
-        switch ($this->type) {
-            case 'multiple_choice':
-                return $this->checkMultipleChoiceAnswer($userAnswer);
-            case 'true_false':
-                return $this->checkTrueFalseAnswer($userAnswer);
-            case 'short_answer':
-                return $this->checkShortAnswer($userAnswer);
-            default:
-                return false;
-        }
-    }
 
-    /**
-     * Check multiple choice answer.
-     */
-    private function checkMultipleChoiceAnswer(array $userAnswer): bool
-    {
-        sort($userAnswer);
-        $correctAnswers = $this->correct_answers;
-        sort($correctAnswers);
-        
-        return $userAnswer === $correctAnswers;
-    }
+class QuizQuestion extends Modelclass QuizQuestion extends Model
 
-    /**
-     * Check true/false answer.
-     */
-    private function checkTrueFalseAnswer(array $userAnswer): bool
-    {
-        return count($userAnswer) === 1 && $userAnswer[0] === $this->correct_answers[0];
-    }
+{{
 
-    /**
-     * Check short answer.
-     */
-    private function checkShortAnswer(array $userAnswer): bool
-    {
-        if (count($userAnswer) !== 1) {
-            return false;
-        }
+    protected $fillable = [    protected $fillable = [
 
-        $userAnswerText = $userAnswer[0];
-        
-        foreach ($this->correct_answers as $correctAnswer) {
-            $comparison = $this->case_sensitive 
-                ? $userAnswerText === $correctAnswer
-                : strtolower($userAnswerText) === strtolower($correctAnswer);
-                
-            if ($comparison) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
+        'quiz_id', 'type', 'question', 'options', 'correct_answers',        'quiz_id', 'type', 'question', 'options', 'correct_answers',
 
-    /**
-     * Get formatted options for display.
-     */
-    public function getFormattedOptions(): array
-    {
-        if ($this->type !== 'multiple_choice') {
-            return [];
-        }
+        'explanation', 'points', 'order_position', 'case_sensitive'        'explanation', 'points', 'order_position', 'case_sensitive'
 
-        return collect($this->options)->map(function ($option, $index) {
-            return [
-                'index' => $index,
-                'text' => $option,
-                'label' => chr(65 + $index), // A, B, C, D...
-            ];
-        })->toArray();
-    }
-}space App\Models;
+    ];    ];
+
+
+
+    protected $casts = [    protected $casts = [
+
+        'options' => 'array',        'options' => 'array',
+
+        'correct_answers' => 'array',        'correct_answers' => 'array',
+
+        'points' => 'decimal:2',        'points' => 'decimal:2',
+
+        'case_sensitive' => 'boolean',        'case_sensitive' => 'boolean',
+
+    ];    ];
+
+
+
+    public function quiz()    public function quiz()
+
+    {    {
+
+        return $this->belongsTo(Quiz::class);        return $this->belongsTo(Quiz::class);
+
+    }    }
+
+}}space App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
