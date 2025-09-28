@@ -15,13 +15,13 @@ class Lesson extends Model
         'content',
         'video_url',
         'duration_minutes',
-        'order_index',
+        'order',
         'is_published',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
-        'order_index' => 'integer',
+        'order' => 'integer',
         'duration_minutes' => 'integer',
     ];
 

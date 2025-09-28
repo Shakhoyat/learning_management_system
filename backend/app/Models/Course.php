@@ -60,7 +60,7 @@ class Course extends Model
      */
     public function modules()
     {
-        return $this->hasMany(Module::class)->orderBy('order_index');
+        return $this->hasMany(Module::class)->orderBy('order');
     }
 
     /**
@@ -161,12 +161,12 @@ class Course extends Model
         $totalLessons = $lessonIds->count();
 
         $studentProgress = DB::select("
-            SELECT 
+            SELECT
                 e.user_id,
                 COUNT(p.lesson_id) as completed_lessons,
                 ROUND((COUNT(p.lesson_id)::float / ? * 100)::numeric, 2) as completion_percentage
             FROM enrollments e
-            LEFT JOIN progress p ON p.user_id = e.user_id 
+            LEFT JOIN progress p ON p.user_id = e.user_id
                 AND p.lesson_id = ANY(?)
                 AND p.completed_at IS NOT NULL
             WHERE e.course_id = ?

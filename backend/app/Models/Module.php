@@ -12,14 +12,14 @@ class Module extends Model
     protected $fillable = [
         'title',
         'description',
-        'order_index',
+        'order',
         'course_id',
         'is_published',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
-        'order_index' => 'integer',
+        'order' => 'integer',
     ];
 
     /**
@@ -35,7 +35,7 @@ class Module extends Model
      */
     public function lessons()
     {
-        return $this->hasMany(Lesson::class)->orderBy('order_index');
+        return $this->hasMany(Lesson::class)->orderBy('order');
     }
 
     /**
