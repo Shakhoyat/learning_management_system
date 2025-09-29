@@ -21,22 +21,23 @@ class QuizController extends Controller
     public function index(Request $request, Lesson $lesson): JsonResponse
     {
         $user = Auth::user();
+        $isInstructor = $user && $user->hasRole('instructor');
 
         $quizzes = $lesson->quizzes()
-            ->when(!$user->hasRole('instructor'), function ($query) {
+            ->when(!$isInstructor, function ($query) {
                 $query->where('is_published', true);
             })
-            ->with(['questions' => function ($query) use ($user) {
-                if (!$user->hasRole('instructor')) {
-                    $query->select('id', 'quiz_id', 'type', 'question', 'options', 'points', 'order_position')
-                        ->whereNull('correct_answers'); // Hide correct answers from students
+            ->with(['questions' => function ($query) use ($isInstructor) {
+                if (!$isInstructor) {
+                    $query->select('id', 'quiz_id', 'type', 'question', 'options', 'points', 'order_position');
+                    // Hide correct answers from non-instructors
                 }
             }])
             ->withCount('questions')
             ->get();
 
-        // Add attempt information for students
-        if (!$user->hasRole('instructor')) {
+        // Add attempt information for authenticated users who are not instructors
+        if ($user && !$isInstructor) {
             $quizzes->load(['attempts' => function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             }]);
@@ -291,7 +292,7 @@ class QuizController extends Controller
     {
         $analytics = DB::select("
             WITH attempt_stats AS (
-                SELECT 
+                SELECT
                     qa.user_id,
                     qa.attempt_number,
                     qa.score,
@@ -299,11 +300,11 @@ class QuizController extends Controller
                     qa.time_spent_seconds,
                     qa.completed_at,
                     ROW_NUMBER() OVER (PARTITION BY qa.user_id ORDER BY qa.score DESC) as best_attempt_rank
-                FROM quiz_attempts qa 
+                FROM quiz_attempts qa
                 WHERE qa.quiz_id = ? AND qa.status = 'completed'
             ),
             question_stats AS (
-                SELECT 
+                SELECT
                     qq.id as question_id,
                     qq.question,
                     qq.type,
@@ -312,7 +313,7 @@ class QuizController extends Controller
                     COUNT(CASE WHEN qan.is_correct THEN 1 END) as correct_answers,
                     AVG(qan.points_earned) as avg_points,
                     ROUND(
-                        (COUNT(CASE WHEN qan.is_correct THEN 1 END)::DECIMAL / COUNT(qan.id)) * 100, 
+                        (COUNT(CASE WHEN qan.is_correct THEN 1 END)::DECIMAL / COUNT(qan.id)) * 100,
                         2
                     ) as success_rate
                 FROM quiz_questions qq
@@ -321,7 +322,7 @@ class QuizController extends Controller
                 WHERE qq.quiz_id = ? AND qa.status = 'completed'
                 GROUP BY qq.id, qq.question, qq.type, qq.points
             )
-            SELECT 
+            SELECT
                 'overview' as type,
                 COUNT(DISTINCT ats.user_id) as total_students,
                 COUNT(ats.user_id) as total_attempts,
@@ -334,10 +335,10 @@ class QuizController extends Controller
                 AVG(ats.time_spent_seconds) as avg_time_spent
             FROM attempt_stats ats
             WHERE ats.best_attempt_rank = 1
-            
+
             UNION ALL
-            
-            SELECT 
+
+            SELECT
                 'questions' as type,
                 NULL, NULL, NULL, NULL, NULL, NULL
             FROM question_stats
@@ -345,7 +346,7 @@ class QuizController extends Controller
         ", [$quiz->id, $quiz->id]);
 
         $questionStats = DB::select("
-            SELECT 
+            SELECT
                 qq.id as question_id,
                 qq.question,
                 qq.type,
@@ -354,7 +355,7 @@ class QuizController extends Controller
                 COUNT(CASE WHEN qan.is_correct THEN 1 END) as correct_answers,
                 ROUND(AVG(qan.points_earned), 2) as avg_points,
                 ROUND(
-                    (COUNT(CASE WHEN qan.is_correct THEN 1 END)::DECIMAL / NULLIF(COUNT(qan.id), 0)) * 100, 
+                    (COUNT(CASE WHEN qan.is_correct THEN 1 END)::DECIMAL / NULLIF(COUNT(qan.id), 0)) * 100,
                     2
                 ) as success_rate
             FROM quiz_questions qq
@@ -366,8 +367,8 @@ class QuizController extends Controller
         ", [$quiz->id]);
 
         $scoreDistribution = DB::select("
-            SELECT 
-                CASE 
+            SELECT
+                CASE
                     WHEN score >= 90 THEN 'A (90-100%)'
                     WHEN score >= 80 THEN 'B (80-89%)'
                     WHEN score >= 70 THEN 'C (70-79%)'
@@ -377,7 +378,7 @@ class QuizController extends Controller
                 COUNT(*) as count
             FROM (
                 SELECT DISTINCT ON (user_id) user_id, score
-                FROM quiz_attempts 
+                FROM quiz_attempts
                 WHERE quiz_id = ? AND status = 'completed'
                 ORDER BY user_id, score DESC
             ) best_scores
