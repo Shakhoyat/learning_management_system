@@ -37,6 +37,16 @@ Route::get('/courses', [CourseController::class, 'index']);
 Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/categories', [CourseController::class, 'categories']);
 
+// Test quiz routes (public for testing)
+Route::get('/test/lessons/{lesson}/quizzes', [QuizController::class, 'index']);
+Route::get('/test/quiz/{id}', function ($id) {
+    $quiz = App\Models\Quiz::with('questions')->find($id);
+    return response()->json([
+        'status' => 'success',
+        'data' => $quiz
+    ]);
+});
+
 // Protected routes - require authentication
 Route::middleware(['auth:sanctum'])->group(function () {
     // General authenticated routes
