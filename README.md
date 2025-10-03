@@ -55,7 +55,7 @@ This Learning Management System is a **production-ready Laravel application** th
 
 ```mermaid
 graph TD
-    subgraph "Service Layer Pattern"
+    subgraph SLP ["Service Layer Pattern"]
         SL1[QuizGradingService] --> SL2[Complex Business Logic]
         SL2 --> SL3[Auto-grading Algorithm]
         SL2 --> SL4[Multiple Question Types]
@@ -66,19 +66,19 @@ graph TD
         SL7 --> SL9[Error Handling]
     end
     
-    subgraph "Repository Pattern (Smart Models)"
+    subgraph RPP ["Repository Pattern Smart Models"]
         RP1[Course Model] --> RP2[Business Methods]
-        RP2 --> RP3[getEffectivePrice()]
-        RP2 --> RP4[getProgressForUser()]
-        RP2 --> RP5[getCompletionStatistics()]
+        RP2 --> RP3[getEffectivePrice]
+        RP2 --> RP4[getProgressForUser]
+        RP2 --> RP5[getCompletionStatistics]
         
         RP6[Progress Model] --> RP7[Analytics Methods]
-        RP7 --> RP8[getUserProgressAnalytics()]
-        RP7 --> RP9[getLearningStreak()]
-        RP7 --> RP10[getCourseProgress()]
+        RP7 --> RP8[getUserProgressAnalytics]
+        RP7 --> RP9[getLearningStreak]
+        RP7 --> RP10[getCourseProgress]
     end
     
-    subgraph "Observer Pattern (Events)"
+    subgraph OPP ["Observer Pattern Events"]
         OP1[Model Events] --> OP2[Enrollment Created]
         OP2 --> OP3[Send Welcome Email]
         OP2 --> OP4[Update Analytics]
@@ -87,9 +87,9 @@ graph TD
         OP6 --> OP7[Award Certificate]
     end
     
-    subgraph "Strategy Pattern"
+    subgraph SPP ["Strategy Pattern"]
         SP1[QuizGradingStrategy] --> SP2[Multiple Choice Strategy]
-        SP1 --> SP3[True/False Strategy]
+        SP1 --> SP3[True False Strategy]
         SP1 --> SP4[Short Answer Strategy]
         
         SP5[PaymentStrategy] --> SP6[Credit Card Gateway]
@@ -309,7 +309,7 @@ class Course extends Model
 
 ```mermaid
 graph TB
-    subgraph "HasMany Relationships"
+    subgraph HMR ["HasMany Relationships"]
         U1[User] -->|HasMany| C1[Courses as Instructor]
         U1 -->|HasMany| E1[Enrollments]
         U1 -->|HasMany| P1[Progress Records]
@@ -328,7 +328,7 @@ graph TB
         Q2 -->|HasMany| QA2[Quiz Attempts]
     end
     
-    subgraph "BelongsTo Relationships"
+    subgraph BTR ["BelongsTo Relationships"]
         C3[Course] -->|BelongsTo| U2[Instructor User]
         C3 -->|BelongsTo| CAT1[Category]
         
@@ -342,9 +342,9 @@ graph TB
         P3 -->|BelongsTo| L4[Lesson]
     end
     
-    subgraph "Advanced Relationships"
+    subgraph AR ["Advanced Relationships"]
         C6[Course] -.->|HasManyThrough| L5[Lessons via Modules]
-        C6 -.->|BelongsToMany<br/>with Pivot| U5[Students via Enrollments]
+        C6 -.->|BelongsToMany with Pivot| U5[Students via Enrollments]
         L6[Lesson] -.->|HasOneThrough| C7[Course via Module]
     end
     
@@ -413,64 +413,53 @@ class Lesson extends Model
 mindmap
   root((Eloquent Mastery))
     Model Features
-      Accessors & Mutators
-        getTotalLessonsAttribute()
-        getEffectivePrice()
-        setPasswordAttribute()
-      
+      Accessors and Mutators
+        getTotalLessonsAttribute
+        getEffectivePrice
+        setPasswordAttribute
       Query Scopes
-        scopeInstructors()
-        scopePublished()
-        scopeWithProgress()
-      
+        scopeInstructors
+        scopePublished
+        scopeWithProgress
       Model Events
-        creating()
-        updated()
-        deleting()
-    
+        creating
+        updated
+        deleting
     Relationship Features
       Eager Loading
-        with(['modules.lessons'])
-        load(['progress.lesson'])
-      
+        with modules lessons
+        load progress lesson
       Lazy Eager Loading
-        loadMissing()
-        loadCount()
-      
+        loadMissing
+        loadCount
       Relationship Queries
-        whereHas()
-        withCount()
-        withAvg()
-    
+        whereHas
+        withCount
+        withAvg
     Advanced Queries
       Raw Expressions
-        DB::raw()
-        selectRaw()
-        whereRaw()
-      
+        DB raw
+        selectRaw
+        whereRaw
       Subqueries
-        where(function($q) {})
-        whereIn(Model::select())
-      
+        where function
+        whereIn Model select
       Window Functions
-        ROW_NUMBER() OVER
-        LAG() OVER
+        ROW_NUMBER OVER
+        LAG OVER
         PARTITION BY
-    
     Performance
       Database Transactions
-        DB::transaction()
-        beginTransaction()
-      
+        DB transaction
+        beginTransaction
       Query Optimization
-        select() specific columns
-        chunk() large datasets
-        cursor() memory efficient
-      
+        select specific columns
+        chunk large datasets
+        cursor memory efficient
       Caching Strategy
-        remember()
-        forever()
-        flush()
+        remember
+        forever
+        flush
 ```
 
 ### ✅ **Core Framework Features**
@@ -656,21 +645,21 @@ graph TD
     A --> C[Query Optimization]
     A --> D[Relationship Efficiency]
     
-    B --> B1[Primary Keys: BIGINT AUTO_INCREMENT]
-    B --> B2[Foreign Keys: Cascading Constraints]
-    B --> B3[Unique Constraints: user_id + lesson_id]
-    B --> B4[Composite Indexes: user_id + completed_at]
-    B --> B5[JSON Indexes: GIN indexes for JSON fields]
+    B --> B1[Primary Keys BIGINT AUTO_INCREMENT]
+    B --> B2[Foreign Keys Cascading Constraints]
+    B --> B3[Unique Constraints user_id plus lesson_id]
+    B --> B4[Composite Indexes user_id plus completed_at]
+    B --> B5[JSON Indexes GIN indexes for JSON fields]
     
-    C --> C1[Window Functions: Avoid N+1 queries]
-    C --> C2[CTEs: Complex logic simplification]
-    C --> C3[Eager Loading: with() relationships]
-    C --> C4[Query Scopes: Reusable query logic]
+    C --> C1[Window Functions Avoid N plus 1 queries]
+    C --> C2[CTEs Complex logic simplification]
+    C --> C3[Eager Loading with relationships]
+    C --> C4[Query Scopes Reusable query logic]
     
-    D --> D1[HasManyThrough: Direct lesson access]
-    D --> D2[BelongsToMany: Pivot table optimization]
-    D --> D3[Polymorphic: Flexible relationships]
-    D --> D4[Lazy Loading: On-demand data]
+    D --> D1[HasManyThrough Direct lesson access]
+    D --> D2[BelongsToMany Pivot table optimization]
+    D --> D3[Polymorphic Flexible relationships]
+    D --> D4[Lazy Loading On demand data]
     
     style A fill:#ff9800
     style B fill:#2196f3
@@ -922,7 +911,7 @@ erDiagram
 
 ```mermaid
 classDiagram
-    %% User & Authentication
+    %% User and Authentication
     class User {
         +string name
         +string email
@@ -981,7 +970,7 @@ classDiagram
         +getCompletionRate()
     }
 
-    %% Enrollment & Progress
+    %% Enrollment and Progress
     class Enrollment {
         +enum status
         +decimal amount_paid
@@ -1002,9 +991,9 @@ classDiagram
         +lesson() BelongsTo
         +markAsCompleted()
         +isCompleted()
-        +getUserProgressAnalytics()$
-        +getLearningStreak()$
-        +getCourseProgress()$
+        +getUserProgressAnalytics()
+        +getLearningStreak()
+        +getCourseProgress()
     }
 
     %% Assessment System
@@ -1101,7 +1090,7 @@ timeline
         2025-09-21 11:14:00 : create_categories_table
                            : Base categorization system
                            : Slug generation for SEO
-                           : Active/inactive states
+                           : Active inactive states
         
         2025-09-21 11:14:54 : create_courses_table
                             : Complex pricing structure
