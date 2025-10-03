@@ -97,25 +97,43 @@ graph TD
         SP5 --> SP8[Bank Transfer]
     end
     
-    style SL1 fill:#1e40af,stroke:#1e40af,stroke-width:3px,color:#fff
-    style SL2 fill:#3b82f6,stroke:#3b82f6,stroke-width:2px,color:#fff
-    style SL6 fill:#1e40af,stroke:#1e40af,stroke-width:3px,color:#fff
-    style SL7 fill:#3b82f6,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style SL1 fill:#0f172a,stroke:#1e293b,stroke-width:3px,color:#ffffff
+    style SL2 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style SL3 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style SL4 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style SL5 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style SL6 fill:#0f172a,stroke:#1e293b,stroke-width:3px,color:#ffffff
+    style SL7 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style SL8 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style SL9 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
     
-    style RP1 fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
-    style RP2 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
-    style RP6 fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
-    style RP7 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style RP1 fill:#581c87,stroke:#7c2d12,stroke-width:3px,color:#ffffff
+    style RP2 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style RP3 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style RP4 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style RP5 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style RP6 fill:#581c87,stroke:#7c2d12,stroke-width:3px,color:#ffffff
+    style RP7 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style RP8 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style RP9 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style RP10 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
     
-    style OP1 fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
-    style OP2 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
-    style OP5 fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
-    style OP6 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    style OP1 fill:#064e3b,stroke:#065f46,stroke-width:3px,color:#ffffff
+    style OP2 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style OP3 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style OP4 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style OP5 fill:#064e3b,stroke:#065f46,stroke-width:3px,color:#ffffff
+    style OP6 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style OP7 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
     
-    style SP1 fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
-    style SP2 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
-    style SP5 fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
-    style SP6 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style SP1 fill:#7f1d1d,stroke:#991b1b,stroke-width:3px,color:#ffffff
+    style SP2 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style SP3 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style SP4 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style SP5 fill:#7f1d1d,stroke:#991b1b,stroke-width:3px,color:#ffffff
+    style SP6 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style SP7 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style SP8 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
 ```
 
 **Design Pattern Implementation Examples:**
@@ -363,19 +381,47 @@ graph TB
         L6[📄 Lesson] -.->|HasOneThrough| C7[📚 Course via Module]
     end
     
-    style U1 fill:#1e40af,stroke:#1e40af,stroke-width:3px,color:#fff
-    style C2 fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
-    style M2 fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
-    style L2 fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
-    style Q2 fill:#ea580c,stroke:#ea580c,stroke-width:3px,color:#fff
+    style U1 fill:#0f172a,stroke:#1e293b,stroke-width:3px,color:#ffffff
+    style C1 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style E1 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style P1 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style QA1 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style T1 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
     
-    style U2 fill:#3b82f6,stroke:#3b82f6,stroke-width:2px,color:#fff
-    style C3 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
-    style M3 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
-    style L3 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style C2 fill:#581c87,stroke:#7c2d12,stroke-width:3px,color:#ffffff
+    style M1 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style E2 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style T2 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
     
-    style C6 fill:#0891b2,stroke:#0891b2,stroke-width:3px,color:#fff
-    style L6 fill:#0891b2,stroke:#0891b2,stroke-width:3px,color:#fff
+    style M2 fill:#064e3b,stroke:#065f46,stroke-width:3px,color:#ffffff
+    style L1 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style L2 fill:#064e3b,stroke:#065f46,stroke-width:3px,color:#ffffff
+    style P2 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style Q1 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    
+    style Q2 fill:#7f1d1d,stroke:#991b1b,stroke-width:3px,color:#ffffff
+    style QQ1 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style QA2 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    
+    style U2 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style C3 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style CAT1 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style M3 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style L3 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style C4 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style M4 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style E3 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style U3 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style C5 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style P3 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style U4 fill:#1e293b,stroke:#334155,stroke-width:2px,color:#ffffff
+    style L4 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    
+    style C6 fill:#155e75,stroke:#0891b2,stroke-width:3px,color:#ffffff
+    style L5 fill:#0891b2,stroke:#06b6d4,stroke-width:2px,color:#ffffff
+    style U5 fill:#0891b2,stroke:#06b6d4,stroke-width:2px,color:#ffffff
+    style L6 fill:#155e75,stroke:#0891b2,stroke-width:3px,color:#ffffff
+    style C7 fill:#0891b2,stroke:#06b6d4,stroke-width:2px,color:#ffffff
 ```
 
 **Eloquent Relationship Examples:**
@@ -689,26 +735,26 @@ graph TD
     D --> D3[🔀 Polymorphic Flexible relationships]
     D --> D4[💤 Lazy Loading On demand data]
     
-    style A fill:#1e40af,stroke:#1e40af,stroke-width:4px,color:#fff
-    style B fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
-    style C fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
-    style D fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
+    style A fill:#0f172a,stroke:#1e293b,stroke-width:4px,color:#ffffff
+    style B fill:#7f1d1d,stroke:#991b1b,stroke-width:3px,color:#ffffff
+    style C fill:#064e3b,stroke:#065f46,stroke-width:3px,color:#ffffff
+    style D fill:#581c87,stroke:#7c2d12,stroke-width:3px,color:#ffffff
     
-    style B1 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
-    style B2 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
-    style B3 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
-    style B4 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
-    style B5 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style B1 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style B2 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style B3 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style B4 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
+    style B5 fill:#991b1b,stroke:#b91c1c,stroke-width:2px,color:#ffffff
     
-    style C1 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
-    style C2 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
-    style C3 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
-    style C4 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    style C1 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style C2 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style C3 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
+    style C4 fill:#065f46,stroke:#047857,stroke-width:2px,color:#ffffff
     
-    style D1 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
-    style D2 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
-    style D3 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
-    style D4 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D1 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style D2 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style D3 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
+    style D4 fill:#7c2d12,stroke:#a3470a,stroke-width:2px,color:#ffffff
 ```
 
 **Index Strategy Examples:**
