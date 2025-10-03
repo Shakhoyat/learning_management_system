@@ -22,7 +22,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const { login } = useAuth();
+  const { login, getRoleDashboard } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,8 +31,11 @@ export default function LoginPage() {
     setError("");
 
     try {
-      await login(email, password);
-      router.push("/student"); // Redirect to dashboard
+      const user = await login(email, password);
+
+      // Redirect based on user role
+      const dashboardRoute = getRoleDashboard(user.role);
+      router.push(dashboardRoute);
     } catch (err: any) {
       setError(
         err.response?.data?.message || "Login failed. Please try again."

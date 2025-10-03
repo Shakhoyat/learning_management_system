@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: laravel
       POSTGRES_DB: lms_db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -15,14 +15,12 @@ services:
     image: redis:alpine
     restart: always
     ports:
-      - "6379:6379"
+      - "6380:6379"
 
   app:
     build: ./backend
     ports:
       - "8000:8000"
-    volumes:
-      - ./backend:/var/www/html
     depends_on:
       - postgres
       - redis
@@ -37,7 +35,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - ./frontend:/app
       - /app/node_modules

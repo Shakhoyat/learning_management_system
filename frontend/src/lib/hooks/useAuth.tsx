@@ -7,7 +7,7 @@ import { useToast } from "@/lib/hooks/use-toast";
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   register: (
     name: string,
     email: string,
@@ -16,6 +16,7 @@ interface AuthContextType {
     role?: "student" | "instructor"
   ) => Promise<void>;
   logout: () => Promise<void>;
+  getRoleDashboard: (role: string) => string;
   isAuthenticated: boolean;
 }
 
@@ -55,6 +56,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         title: "Welcome back!",
         description: `Logged in successfully as ${response.user.name}`,
       });
+
+      return response.user; // Return user data for role-based routing
     } catch (error: unknown) {
       const errorMessage =
         (error as any)?.response?.data?.message ||
@@ -65,6 +68,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         variant: "destructive",
       });
       throw error;
+    }
+  };
+
+  const getRoleDashboard = (role: string) => {
+    switch (role) {
+      case "admin":
+        return "/admin";
+      case "instructor":
+        return "/instructor";
+      case "student":
+      default:
+        return "/student";
     }
   };
 
@@ -125,6 +140,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     login,
     register,
     logout,
+    getRoleDashboard,
     isAuthenticated: !!user,
   };
 
