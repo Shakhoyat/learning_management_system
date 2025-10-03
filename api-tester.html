@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS API Tester</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2563eb;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .section {
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .section-header {
+            background: #f8fafc;
+            padding: 15px 20px;
+            font-weight: bold;
+            border-bottom: 1px solid #e5e5e5;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .section.active .section-content {
+            display: block;
+        }
+
+        .endpoint {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .method {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .method.GET {
+            background: #10b981;
+            color: white;
+        }
+
+        .method.POST {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .method.PUT {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .method.DELETE {
+            background: #ef4444;
+            color: white;
+        }
+
+        .url {
+            font-family: monospace;
+            color: #374151;
+        }
+
+        .test-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .test-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .test-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .response {
+            margin-top: 10px;
+            padding: 10px;
+            background: #1f2937;
+            color: #10b981;
+            font-family: monospace;
+            font-size: 12px;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        .auth-section {
+            background: #fef3c7;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .token-display {
+            font-family: monospace;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-size: 12px;
+            word-break: break-all;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+
+        .section.active .toggle-icon {
+            transform: rotate(90deg);
+        }
+
+        .base-url-input {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LMS API Tester</h1>
+            <p>Test all your Laravel backend endpoints</p>
+            <div>
+                <label>Base URL:</label>
+                <input type="text" id="baseUrl" class="base-url-input" value="http://localhost:8000/api">
+            </div>
+        </div>
+
+        <div class="auth-section">
+            <h3>Authentication Status</h3>
+            <div>
+                <strong>Admin Token:</strong> <span id="adminToken">Not logged in</span>
+                <div class="token-display" id="adminTokenDisplay" style="display: none;"></div>
+            </div>
+            <div>
+                <strong>Instructor Token:</strong> <span id="instructorToken">Not logged in</span>
+                <div class="token-display" id="instructorTokenDisplay" style="display: none;"></div>
+            </div>
+            <div>
+                <strong>Student Token:</strong> <span id="studentToken">Not logged in</span>
+                <div class="token-display" id="studentTokenDisplay" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="section active" id="auth-section">
+            <div class="section-header" onclick="toggleSection('auth-section')">
+                <span>🔐 Authentication</span>
+                <span class="toggle-icon">▶</span>
+            </div>
+            <div class="section-content">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method POST">POST</span>
+                        <span class="url">/auth/register</span>
+                        <button class="test-btn" onclick="testRegister('admin')">Register Admin</button>
+                        <button class="test-btn" onclick="testRegister('instructor')">Register Instructor</button>
+                        <button class="test-btn" onclick="testRegister('student')">Register Student</button>
+                    </div>
+                    <div class="response" id="register-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method POST">POST</span>
+                        <span class="url">/auth/login</span>
+                        <button class="test-btn" onclick="testLogin('admin')">Login Admin</button>
+                        <button class="test-btn" onclick="testLogin('instructor')">Login Instructor</button>
+                        <button class="test-btn" onclick="testLogin('student')">Login Student</button>
+                    </div>
+                    <div class="response" id="login-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method GET">GET</span>
+                        <span class="url">/auth/user</span>
+                        <button class="test-btn" onclick="testGetUser()">Get Current User</button>
+                    </div>
+                    <div class="response" id="user-response"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="courses-section">
+            <div class="section-header" onclick="toggleSection('courses-section')">
+                <span>📚 Courses</span>
+                <span class="toggle-icon">▶</span>
+            </div>
+            <div class="section-content">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method GET">GET</span>
+                        <span class="url">/courses</span>
+                        <button class="test-btn" onclick="testGetCourses()">Get All Courses</button>
+                    </div>
+                    <div class="response" id="courses-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method GET">GET</span>
+                        <span class="url">/categories</span>
+                        <button class="test-btn" onclick="testGetCategories()">Get Categories</button>
+                    </div>
+                    <div class="response" id="categories-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method POST">POST</span>
+                        <span class="url">/instructor/courses</span>
+                        <button class="test-btn" onclick="testCreateCourse()">Create Course</button>
+                    </div>
+                    <div class="response" id="create-course-response"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="quiz-section">
+            <div class="section-header" onclick="toggleSection('quiz-section')">
+                <span>🧩 Quiz System</span>
+                <span class="toggle-icon">▶</span>
+            </div>
+            <div class="section-content">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method GET">GET</span>
+                        <span class="url">/test/lessons/1/quizzes</span>
+                        <button class="test-btn" onclick="testGetQuizzes()">Get Lesson Quizzes</button>
+                    </div>
+                    <div class="response" id="quizzes-response"></div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method POST">POST</span>
+                        <span class="url">/instructor/lessons/1/quizzes</span>
+                        <button class="test-btn" onclick="testCreateQuiz()">Create Quiz</button>
+                    </div>
+                    <div class="response" id="create-quiz-response"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tokens = {
+            admin: null,
+            instructor: null,
+            student: null
+        };
+
+        let testData = {
+            courseId: null,
+            quizId: null
+        };
+
+        function getBaseUrl() {
+            return document.getElementById('baseUrl').value;
+        }
+
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('active');
+        }
+
+        function updateTokenDisplay(role, token) {
+            tokens[role] = token;
+            const tokenElement = document.getElementById(`${role}Token`);
+            const tokenDisplayElement = document.getElementById(`${role}TokenDisplay`);
+
+            if (token) {
+                tokenElement.textContent = 'Logged in ✅';
+                tokenDisplayElement.textContent = token;
+                tokenDisplayElement.style.display = 'block';
+            } else {
+                tokenElement.textContent = 'Not logged in';
+                tokenDisplayElement.style.display = 'none';
+            }
+        }
+
+        async function makeRequest(method, endpoint, data = null, token = null) {
+            const url = `${getBaseUrl()}${endpoint}`;
+            const headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            };
+
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const config = {
+                method,
+                headers,
+            };
+
+            if (data && (method === 'POST' || method === 'PUT')) {
+                config.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(url, config);
+                const result = await response.json();
+
+                return {
+                    success: response.ok,
+                    status: response.status,
+                    data: result
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        function displayResponse(elementId, response) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.textContent = JSON.stringify(response, null, 2);
+        }
+
+        async function testRegister(role) {
+            const userData = {
+                name: `${role.charAt(0).toUpperCase() + role.slice(1)} User`,
+                email: `${role}@test.com`,
+                password: 'password123',
+                password_confirmation: 'password123',
+                role: role
+            };
+
+            const response = await makeRequest('POST', '/auth/register', userData);
+            displayResponse('register-response', response);
+
+            if (response.success && response.data.token) {
+                updateTokenDisplay(role, response.data.token);
+            }
+        }
+
+        async function testLogin(role) {
+            const loginData = {
+                email: `${role}@test.com`,
+                password: 'password123'
+            };
+
+            const response = await makeRequest('POST', '/auth/login', loginData);
+            displayResponse('login-response', response);
+
+            if (response.success && response.data.token) {
+                updateTokenDisplay(role, response.data.token);
+            }
+        }
+
+        async function testGetUser() {
+            const token = tokens.admin || tokens.instructor || tokens.student;
+            if (!token) {
+                alert('Please login first');
+                return;
+            }
+
+            const response = await makeRequest('GET', '/auth/user', null, token);
+            displayResponse('user-response', response);
+        }
+
+        async function testGetCourses() {
+            const response = await makeRequest('GET', '/courses');
+            displayResponse('courses-response', response);
+        }
+
+        async function testGetCategories() {
+            const response = await makeRequest('GET', '/categories');
+            displayResponse('categories-response', response);
+        }
+
+        async function testCreateCourse() {
+            if (!tokens.instructor && !tokens.admin) {
+                alert('Please login as instructor or admin first');
+                return;
+            }
+
+            const courseData = {
+                title: 'Test Course from Web Tester',
+                description: 'A test course created from the web tester',
+                category_id: 1,
+                level: 'beginner',
+                duration: 40,
+                price: 99.99,
+                image_url: 'https://example.com/test-course.jpg'
+            };
+
+            const token = tokens.instructor || tokens.admin;
+            const response = await makeRequest('POST', '/instructor/courses', courseData, token);
+            displayResponse('create-course-response', response);
+
+            if (response.success && response.data.data) {
+                testData.courseId = response.data.data.id;
+            }
+        }
+
+        async function testGetQuizzes() {
+            const response = await makeRequest('GET', '/test/lessons/1/quizzes');
+            displayResponse('quizzes-response', response);
+        }
+
+        async function testCreateQuiz() {
+            if (!tokens.instructor && !tokens.admin) {
+                alert('Please login as instructor or admin first');
+                return;
+            }
+
+            const quizData = {
+                title: 'Test Quiz from Web Tester',
+                description: 'A test quiz created from the web tester',
+                instructions: 'Answer all questions carefully',
+                time_limit_minutes: 30,
+                max_attempts: 3,
+                passing_score: 70,
+                shuffle_questions: true,
+                show_results_immediately: true,
+                allow_review: true,
+                questions: [
+                    {
+                        type: 'multiple_choice',
+                        question: 'What is 2 + 2?',
+                        options: ['3', '4', '5', '6'],
+                        correct_answers: ['4'],
+                        explanation: '2 + 2 equals 4',
+                        points: 10,
+                        case_sensitive: false
+                    },
+                    {
+                        type: 'true_false',
+                        question: 'The sky is blue.',
+                        options: ['True', 'False'],
+                        correct_answers: ['True'],
+                        explanation: 'The sky appears blue due to light scattering.',
+                        points: 5,
+                        case_sensitive: false
+                    }
+                ]
+            };
+
+            const token = tokens.instructor || tokens.admin;
+            const response = await makeRequest('POST', '/instructor/lessons/1/quizzes', quizData, token);
+            displayResponse('create-quiz-response', response);
+
+            if (response.success && response.data.data) {
+                testData.quizId = response.data.data.id;
+            }
+        }
+
+        // Initialize with first section open
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('LMS API Tester initialized');
+        });
+    </script>
+</body>
+
+</html>
