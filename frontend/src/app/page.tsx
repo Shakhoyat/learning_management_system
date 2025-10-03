@@ -1,33 +1,157 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '@/lib/hooks/useAuth';
+import { Navigation } from '@/components/features/Navigation';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const { user, loading, isAuthenticated } = useAuth();
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
+  useEffect(() => {
+    if (!loading && isAuthenticated && user) {
+      // Redirect authenticated users to their dashboard
+      switch (user.role) {
+        case 'student':
+          router.push('/student');
+          break;
+        case 'instructor':
+          router.push('/instructor');
+          break;
+        case 'admin':
+          router.push('/admin');
+          break;
+        default:
+          router.push('/student');
+      }
+    }
+  }, [user, loading, isAuthenticated, router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Redirecting to dashboard...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <Navigation />
+      
+      {/* Hero Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            Learn Anything,
+            <span className="text-blue-600"> Anywhere</span>
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Join thousands of learners on our modern Learning Management System. 
+            Access high-quality courses, track your progress, and achieve your learning goals.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Link href="/register">
+              <Button size="lg" className="px-8 py-3">
+                Get Started Free
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="outline" size="lg" className="px-8 py-3">
+                Sign In
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Why Choose Our LMS?
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Experience modern learning with features designed for both students and instructors
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">📚 Rich Course Content</CardTitle>
+              <CardDescription>
+                Interactive lessons with videos, quizzes, and downloadable resources
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">
+                Engage with multimedia content designed to enhance your learning experience
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">📊 Progress Tracking</CardTitle>
+              <CardDescription>
+                Monitor your learning journey with detailed analytics and insights
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">
+                Get real-time feedback on your progress and identify areas for improvement
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">🏆 Certificates</CardTitle>
+              <CardDescription>
+                Earn verified certificates upon successful course completion
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">
+                Showcase your achievements with industry-recognized certifications
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="bg-blue-600 text-white py-20">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold mb-4">
+            Ready to Start Learning?
+          </h2>
+          <p className="text-xl mb-8 opacity-90">
+            Join our community of learners and unlock your potential today
+          </p>
+          <Link href="/register">
+            <Button size="lg" variant="secondary" className="px-8 py-3">
+              Create Your Account
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
