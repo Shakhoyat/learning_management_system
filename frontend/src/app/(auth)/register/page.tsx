@@ -1,35 +1,42 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useAuth } from '@/lib/hooks/useAuth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-    role: 'student' as 'student' | 'instructor'
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+    role: "student" as "student" | "instructor",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  
+  const [error, setError] = useState("");
+
   const { register } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     if (formData.password !== formData.passwordConfirmation) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       setLoading(false);
       return;
     }
@@ -42,18 +49,22 @@ export default function RegisterPage() {
         formData.passwordConfirmation,
         formData.role
       );
-      router.push('/student'); // Redirect to dashboard
+      router.push("/student"); // Redirect to dashboard
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -62,7 +73,9 @@ export default function RegisterPage() {
       <div className="max-w-md w-full space-y-8">
         <Card>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Create your account</CardTitle>
+            <CardTitle className="text-2xl text-center">
+              Create your account
+            </CardTitle>
             <CardDescription className="text-center">
               Fill in your details to get started with LMS
             </CardDescription>
@@ -138,10 +151,10 @@ export default function RegisterPage() {
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? 'Creating account...' : 'Create account'}
+                {loading ? "Creating account..." : "Create account"}
               </Button>
               <div className="text-sm text-center">
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <Link href="/login" className="text-blue-600 hover:underline">
                   Sign in
                 </Link>
