@@ -50,13 +50,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await authApi.login({ email, password });
       localStorage.setItem("token", response.token);
       setUser(response.user);
-      
+
       toast({
         title: "Welcome back!",
         description: `Logged in successfully as ${response.user.name}`,
       });
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+    } catch (error: unknown) {
+      const errorMessage =
+        (error as any)?.response?.data?.message ||
+        "Login failed. Please try again.";
       toast({
         title: "Login Failed",
         description: errorMessage,
@@ -83,13 +85,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       localStorage.setItem("token", response.token);
       setUser(response.user);
-      
+
       toast({
         title: "Account Created!",
         description: `Welcome to LMS Platform, ${response.user.name}!`,
       });
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Registration failed. Please try again.";
+    } catch (error: unknown) {
+      const errorMessage =
+        (error as any)?.response?.data?.message ||
+        "Registration failed. Please try again.";
       toast({
         title: "Registration Failed",
         description: errorMessage,
@@ -107,67 +111,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       localStorage.removeItem("token");
       setUser(null);
-      
+
       toast({
         title: "Logged Out",
         description: "You have been successfully logged out.",
       });
-    }
-  };
-
-  const value = {
-    user,
-    loading,
-    login,
-    register,
-    logout,
-    isAuthenticated: !!user,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-}
-      throw error;
-    }
-  };
-
-  const register = async (
-    name: string,
-    email: string,
-    password: string,
-    passwordConfirmation: string,
-    role: "student" | "instructor" = "student"
-  ) => {
-    try {
-      const response = await authApi.register({
-        name,
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
-        role,
-      });
-      localStorage.setItem("token", response.token);
-      setUser(response.user);
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await authApi.logout();
-    } catch (error) {
-      // Even if the API call fails, we should still clear local state
-    } finally {
-      localStorage.removeItem("token");
-      setUser(null);
     }
   };
 
