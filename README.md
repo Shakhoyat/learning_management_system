@@ -530,7 +530,7 @@ mindmap
         forever
         flush
 
-%%{init: {"mindmap": {"theme": "dark", "themeVariables": {"primaryColor": "#0f172a", "primaryTextColor": "#ffffff", "primaryBorderColor": "#334155", "lineColor": "#64748b", "secondaryColor": "#1e293b", "tertiaryColor": "#334155", "background": "#0f172a", "mainBkg": "#1e293b", "secondBkg": "#334155", "tertiaryBkg": "#475569"}}}}%%
+%%{init: {"mindmap": {"theme": "base", "themeVariables": {"primaryColor": "#f8fafc", "primaryTextColor": "#1e293b", "primaryBorderColor": "#0ea5e9", "lineColor": "#0ea5e9", "secondaryColor": "#e2e8f0", "tertiaryColor": "#cbd5e1", "background": "#ffffff", "mainBkg": "#f1f5f9", "secondBkg": "#e2e8f0", "tertiaryBkg": "#cbd5e1"}}}}%%
 ```
 
 ### ✅ **Core Framework Features**
