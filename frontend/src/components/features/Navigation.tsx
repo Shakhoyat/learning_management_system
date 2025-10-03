@@ -13,7 +13,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, Settings, LogOut, BookOpen, BarChart3 } from "lucide-react";
+import {
+  User,
+  Settings,
+  LogOut,
+  LayoutDashboard,
+  GraduationCap,
+} from "lucide-react";
 
 export function Navigation() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -61,31 +67,43 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-gray-800">
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto flex h-16 max-w-screen-2xl items-center px-4">
+        <div className="mr-4 flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2">
+            <GraduationCap className="h-6 w-6 text-primary" />
+            <span className="hidden font-bold sm:inline-block">
               LMS Platform
-            </Link>
-          </div>
+            </span>
+          </Link>
+        </div>
 
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+          <div className="w-full flex-1 md:w-auto md:flex-none">
+            {/* Search could go here if needed */}
+          </div>
+          <nav className="flex items-center space-x-2">
             {isAuthenticated ? (
               <>
                 <Link href={getDashboardLink()}>
-                  <Button variant="ghost" size="sm">
-                    <BarChart3 className="h-4 w-4 mr-2" />
+                  <Button variant="ghost" size="sm" className="h-9 px-3">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
                     Dashboard
                   </Button>
                 </Link>
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src="/avatars/01.png" alt={user?.name || ""} />
-                        <AvatarFallback>
+                    <Button
+                      variant="ghost"
+                      className="relative h-9 w-9 rounded-full"
+                    >
+                      <Avatar className="h-9 w-9">
+                        <AvatarImage
+                          src="/avatars/01.png"
+                          alt={user?.name || ""}
+                        />
+                        <AvatarFallback className="text-sm">
                           {user?.name ? getUserInitials(user.name) : "U"}
                         </AvatarFallback>
                       </Avatar>
@@ -94,7 +112,9 @@ export function Navigation() {
                   <DropdownMenuContent className="w-56" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{user?.name}</p>
+                        <p className="text-sm font-medium leading-none">
+                          {user?.name}
+                        </p>
                         <p className="text-xs leading-none text-muted-foreground">
                           {user?.email}
                         </p>
@@ -123,16 +143,18 @@ export function Navigation() {
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="h-9 px-3">
                     Login
                   </Button>
                 </Link>
                 <Link href="/register">
-                  <Button size="sm">Sign Up</Button>
+                  <Button size="sm" className="h-9 px-3">
+                    Sign Up
+                  </Button>
                 </Link>
               </>
             )}
-          </div>
+          </nav>
         </div>
       </div>
     </nav>

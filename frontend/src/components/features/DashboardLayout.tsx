@@ -11,7 +11,10 @@ interface DashboardLayoutProps {
   allowedRoles?: string[];
 }
 
-export function DashboardLayout({ children, allowedRoles }: DashboardLayoutProps) {
+export function DashboardLayout({
+  children,
+  allowedRoles,
+}: DashboardLayoutProps) {
   const { user, loading, isAuthenticated } = useAuth();
   const router = useRouter();
 
