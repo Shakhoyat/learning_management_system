@@ -529,6 +529,18 @@ mindmap
         remember
         forever
         flush
+
+%%{init: {"theme": "base", "themeVariables": {
+  "primaryColor": "#1E293B",        /* dark slate */
+  "primaryTextColor": "#F9FAFB",    /* near white text */
+  "primaryBorderColor": "#6366F1",  /* indigo border */
+  "lineColor": "#6366F1",
+  "secondaryColor": "#334155",      /* medium slate */
+  "tertiaryColor": "#475569",       /* lighter slate */
+  "mainBkg": "#0F172A",             /* almost black root */
+  "secondBkg": "#1E293B",           /* dark slate secondary */
+  "tertiaryBkg": "#334155"          /* softer slate tertiary */
+}}}%%
 ```
 
 ### ✅ **Core Framework Features**
