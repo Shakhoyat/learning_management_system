@@ -529,19 +529,7 @@ mindmap
         remember
         forever
         flush
-
-%%{init: {"mindmap": {"theme": "base", "themeVariables": {
-  "primaryColor": "#4338CA",
-  "primaryTextColor": "#111827",
-  "primaryBorderColor": "#6366F1",
-  "lineColor": "#6366F1",
-  "secondaryColor": "#EEF2FF",
-  "tertiaryColor": "#E5E7EB",
-  "background": "#FFFFFF",
-  "mainBkg": "#FFFFFF",
-  "secondBkg": "#EEF2FF",
-  "tertiaryBkg": "#E5E7EB"
-}}}}%%
+```
 
 ### ✅ **Core Framework Features**
 
