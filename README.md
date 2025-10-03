@@ -434,52 +434,52 @@ class Lesson extends Model
 
 ```mermaid
 mindmap
-  root((Eloquent Mastery))
-    Model Features
-      Accessors and Mutators
+  root((🎯 Eloquent Mastery))
+    🏗️ Model Features
+      🔧 Accessors and Mutators
         getTotalLessonsAttribute
         getEffectivePrice
         setPasswordAttribute
-      Query Scopes
+      🎯 Query Scopes
         scopeInstructors
         scopePublished
         scopeWithProgress
-      Model Events
+      ⚡ Model Events
         creating
         updated
         deleting
-    Relationship Features
-      Eager Loading
+    🔗 Relationship Features
+      ⚡ Eager Loading
         with modules lessons
         load progress lesson
-      Lazy Eager Loading
+      🚀 Lazy Eager Loading
         loadMissing
         loadCount
-      Relationship Queries
+      🎯 Relationship Queries
         whereHas
         withCount
         withAvg
-    Advanced Queries
-      Raw Expressions
+    🧠 Advanced Queries
+      ⚙️ Raw Expressions
         DB raw
         selectRaw
         whereRaw
-      Subqueries
+      🔍 Subqueries
         where function
         whereIn Model select
-      Window Functions
+      📊 Window Functions
         ROW_NUMBER OVER
         LAG OVER
         PARTITION BY
-    Performance
-      Database Transactions
+    🚀 Performance
+      💾 Database Transactions
         DB transaction
         beginTransaction
-      Query Optimization
+      ⚡ Query Optimization
         select specific columns
         chunk large datasets
         cursor memory efficient
-      Caching Strategy
+      🗄️ Caching Strategy
         remember
         forever
         flush
@@ -921,34 +921,34 @@ erDiagram
         index tokenable "tokenable_type,tokenable_id"
     }
 
-    %% Relationships
-    Users ||--o{ Courses : "instructs (instructor_id)"
-    Users ||--o{ Enrollments : "enrolls_in"
-    Users ||--o{ Progress : "tracks_progress"
-    Users ||--o{ QuizAttempts : "takes_quiz"
-    Users ||--o{ Transactions : "makes_payment"
-    Users ||--o{ PersonalAccessTokens : "has_tokens"
+    %% Relationships with High Contrast Colors
+    Users ||--o{ Courses : "👨‍🏫 instructs (instructor_id)"
+    Users ||--o{ Enrollments : "📚 enrolls_in"
+    Users ||--o{ Progress : "📈 tracks_progress"
+    Users ||--o{ QuizAttempts : "📝 takes_quiz"
+    Users ||--o{ Transactions : "💳 makes_payment"
+    Users ||--o{ PersonalAccessTokens : "🔐 has_tokens"
 
-    Categories ||--o{ Courses : "categorizes"
+    Categories ||--o{ Courses : "🏷️ categorizes"
     
-    Courses ||--o{ Modules : "contains"
-    Courses ||--o{ Enrollments : "enrolled_by_students"
-    Courses ||--o{ Transactions : "generates_revenue"
+    Courses ||--o{ Modules : "📖 contains"
+    Courses ||--o{ Enrollments : "👥 enrolled_by_students"
+    Courses ||--o{ Transactions : "💰 generates_revenue"
     
-    Modules ||--o{ Lessons : "has_lessons"
+    Modules ||--o{ Lessons : "📄 has_lessons"
     
-    Lessons ||--o{ Progress : "progress_tracked"
-    Lessons ||--o{ Quizzes : "has_assessments"
+    Lessons ||--o{ Progress : "📊 progress_tracked"
+    Lessons ||--o{ Quizzes : "❓ has_assessments"
     
-    Quizzes ||--o{ QuizQuestions : "contains_questions"
-    Quizzes ||--o{ QuizAttempts : "attempted_by_students"
+    Quizzes ||--o{ QuizQuestions : "❔ contains_questions"
+    Quizzes ||--o{ QuizAttempts : "📋 attempted_by_students"
     
-    QuizAttempts ||--o{ QuizAnswers : "has_answers"
+    QuizAttempts ||--o{ QuizAnswers : "✅ has_answers"
     
-    QuizQuestions ||--o{ QuizAnswers : "answered_in_attempt"
+    QuizQuestions ||--o{ QuizAnswers : "🔗 answered_in_attempt"
     
-    Enrollments ||--o{ Transactions : "payment_processed"
-    Enrollments ||--o{ Progress : "tracks_course_progress"
+    Enrollments ||--o{ Transactions : "💵 payment_processed"
+    Enrollments ||--o{ Progress : "📈 tracks_course_progress"
 ```
 
 ### 🏗️ **12 Eloquent Models Architecture**
