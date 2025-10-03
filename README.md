@@ -55,7 +55,7 @@ This Learning Management System is a **production-ready Laravel application** th
 
 ```mermaid
 graph TD
-    subgraph SLP ["Service Layer Pattern"]
+    subgraph SLP ["🔧 Service Layer Pattern"]
         SL1[QuizGradingService] --> SL2[Complex Business Logic]
         SL2 --> SL3[Auto-grading Algorithm]
         SL2 --> SL4[Multiple Question Types]
@@ -66,7 +66,7 @@ graph TD
         SL7 --> SL9[Error Handling]
     end
     
-    subgraph RPP ["Repository Pattern Smart Models"]
+    subgraph RPP ["📚 Repository Pattern Smart Models"]
         RP1[Course Model] --> RP2[Business Methods]
         RP2 --> RP3[getEffectivePrice]
         RP2 --> RP4[getProgressForUser]
@@ -78,7 +78,7 @@ graph TD
         RP7 --> RP10[getCourseProgress]
     end
     
-    subgraph OPP ["Observer Pattern Events"]
+    subgraph OPP ["⚡ Observer Pattern Events"]
         OP1[Model Events] --> OP2[Enrollment Created]
         OP2 --> OP3[Send Welcome Email]
         OP2 --> OP4[Update Analytics]
@@ -87,7 +87,7 @@ graph TD
         OP6 --> OP7[Award Certificate]
     end
     
-    subgraph SPP ["Strategy Pattern"]
+    subgraph SPP ["🎯 Strategy Pattern"]
         SP1[QuizGradingStrategy] --> SP2[Multiple Choice Strategy]
         SP1 --> SP3[True False Strategy]
         SP1 --> SP4[Short Answer Strategy]
@@ -97,10 +97,25 @@ graph TD
         SP5 --> SP8[Bank Transfer]
     end
     
-    style SL1 fill:#e3f2fd
-    style RP1 fill:#f3e5f5
-    style OP1 fill:#e8f5e8
-    style SP1 fill:#fff3e0
+    style SL1 fill:#1e40af,stroke:#1e40af,stroke-width:3px,color:#fff
+    style SL2 fill:#3b82f6,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style SL6 fill:#1e40af,stroke:#1e40af,stroke-width:3px,color:#fff
+    style SL7 fill:#3b82f6,stroke:#3b82f6,stroke-width:2px,color:#fff
+    
+    style RP1 fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
+    style RP2 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style RP6 fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
+    style RP7 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    
+    style OP1 fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
+    style OP2 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    style OP5 fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
+    style OP6 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    
+    style SP1 fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
+    style SP2 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style SP5 fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
+    style SP6 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
 ```
 
 **Design Pattern Implementation Examples:**
@@ -309,50 +324,58 @@ class Course extends Model
 
 ```mermaid
 graph TB
-    subgraph HMR ["HasMany Relationships"]
-        U1[User] -->|HasMany| C1[Courses as Instructor]
-        U1 -->|HasMany| E1[Enrollments]
-        U1 -->|HasMany| P1[Progress Records]
-        U1 -->|HasMany| QA1[Quiz Attempts]
-        U1 -->|HasMany| T1[Transactions]
+    subgraph HMR ["📊 HasMany Relationships"]
+        U1[👤 User] -->|HasMany| C1[📚 Courses as Instructor]
+        U1 -->|HasMany| E1[📝 Enrollments]
+        U1 -->|HasMany| P1[📈 Progress Records]
+        U1 -->|HasMany| QA1[📋 Quiz Attempts]
+        U1 -->|HasMany| T1[💳 Transactions]
         
-        C2[Course] -->|HasMany| M1[Modules]
-        C2 -->|HasMany| E2[Enrollments]
-        C2 -->|HasMany| T2[Transactions]
+        C2[📚 Course] -->|HasMany| M1[📖 Modules]
+        C2 -->|HasMany| E2[📝 Enrollments]
+        C2 -->|HasMany| T2[💳 Transactions]
         
-        M2[Module] -->|HasMany| L1[Lessons]
-        L2[Lesson] -->|HasMany| P2[Progress]
-        L2 -->|HasMany| Q1[Quizzes]
+        M2[📖 Module] -->|HasMany| L1[📄 Lessons]
+        L2[📄 Lesson] -->|HasMany| P2[📈 Progress]
+        L2 -->|HasMany| Q1[❓ Quizzes]
         
-        Q2[Quiz] -->|HasMany| QQ1[Quiz Questions]
-        Q2 -->|HasMany| QA2[Quiz Attempts]
+        Q2[❓ Quiz] -->|HasMany| QQ1[❔ Quiz Questions]
+        Q2 -->|HasMany| QA2[📋 Quiz Attempts]
     end
     
-    subgraph BTR ["BelongsTo Relationships"]
-        C3[Course] -->|BelongsTo| U2[Instructor User]
-        C3 -->|BelongsTo| CAT1[Category]
+    subgraph BTR ["🔗 BelongsTo Relationships"]
+        C3[📚 Course] -->|BelongsTo| U2[👨‍🏫 Instructor User]
+        C3 -->|BelongsTo| CAT1[🏷️ Category]
         
-        M3[Module] -->|BelongsTo| C4[Course]
-        L3[Lesson] -->|BelongsTo| M4[Module]
+        M3[📖 Module] -->|BelongsTo| C4[📚 Course]
+        L3[📄 Lesson] -->|BelongsTo| M4[📖 Module]
         
-        E3[Enrollment] -->|BelongsTo| U3[User]
-        E3 -->|BelongsTo| C5[Course]
+        E3[📝 Enrollment] -->|BelongsTo| U3[👤 User]
+        E3 -->|BelongsTo| C5[📚 Course]
         
-        P3[Progress] -->|BelongsTo| U4[User]
-        P3 -->|BelongsTo| L4[Lesson]
+        P3[📈 Progress] -->|BelongsTo| U4[👤 User]
+        P3 -->|BelongsTo| L4[📄 Lesson]
     end
     
-    subgraph AR ["Advanced Relationships"]
-        C6[Course] -.->|HasManyThrough| L5[Lessons via Modules]
-        C6 -.->|BelongsToMany with Pivot| U5[Students via Enrollments]
-        L6[Lesson] -.->|HasOneThrough| C7[Course via Module]
+    subgraph AR ["⚡ Advanced Relationships"]
+        C6[📚 Course] -.->|HasManyThrough| L5[📄 Lessons via Modules]
+        C6 -.->|BelongsToMany with Pivot| U5[👥 Students via Enrollments]
+        L6[📄 Lesson] -.->|HasOneThrough| C7[📚 Course via Module]
     end
     
-    style U1 fill:#e3f2fd
-    style C2 fill:#f3e5f5
-    style M2 fill:#e8f5e8
-    style L2 fill:#fff3e0
-    style Q2 fill:#fce4ec
+    style U1 fill:#1e40af,stroke:#1e40af,stroke-width:3px,color:#fff
+    style C2 fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
+    style M2 fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
+    style L2 fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
+    style Q2 fill:#ea580c,stroke:#ea580c,stroke-width:3px,color:#fff
+    
+    style U2 fill:#3b82f6,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C3 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style M3 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    style L3 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    
+    style C6 fill:#0891b2,stroke:#0891b2,stroke-width:3px,color:#fff
+    style L6 fill:#0891b2,stroke:#0891b2,stroke-width:3px,color:#fff
 ```
 
 **Eloquent Relationship Examples:**
@@ -538,26 +561,31 @@ class User extends Model
 flowchart TD
     A[User Progress Request] --> B{Complex Analytics Query}
     
-    B --> C[CTE: Daily Progress]
-    C --> D[Window Functions:<br/>ROW_NUMBER, LAG, PARTITION BY]
+    B --> C[CTE Daily Progress]
+    C --> D[Window Functions<br/>ROW_NUMBER LAG PARTITION BY]
     
-    B --> E[CTE: Streak Calculation]
-    E --> F[Date Arithmetic:<br/>DATE_PART, Consecutive Days]
+    B --> E[CTE Streak Calculation]
+    E --> F[Date Arithmetic<br/>DATE_PART Consecutive Days]
     
-    B --> G[CTE: Learning Statistics]
-    G --> H[Aggregations:<br/>COUNT, SUM, AVG, MAX]
+    B --> G[CTE Learning Statistics]
+    G --> H[Aggregations<br/>COUNT SUM AVG MAX]
     
-    D --> I[JSON Aggregation:<br/>Structured Results]
+    D --> I[JSON Aggregation<br/>Structured Results]
     F --> I
     H --> I
     
     I --> J[Optimized Response]
     
-    style B fill:#e1f5fe
-    style D fill:#f3e5f5
-    style F fill:#f3e5f5
-    style H fill:#f3e5f5
-    style I fill:#e8f5e8
+    style A fill:#1e40af,stroke:#1e40af,stroke-width:2px,color:#fff
+    style B fill:#7c3aed,stroke:#7c3aed,stroke-width:2px,color:#fff
+    style C fill:#059669,stroke:#059669,stroke-width:2px,color:#fff
+    style D fill:#dc2626,stroke:#dc2626,stroke-width:2px,color:#fff
+    style E fill:#059669,stroke:#059669,stroke-width:2px,color:#fff
+    style F fill:#dc2626,stroke:#dc2626,stroke-width:2px,color:#fff
+    style G fill:#059669,stroke:#059669,stroke-width:2px,color:#fff
+    style H fill:#dc2626,stroke:#dc2626,stroke-width:2px,color:#fff
+    style I fill:#ea580c,stroke:#ea580c,stroke-width:2px,color:#fff
+    style J fill:#0891b2,stroke:#0891b2,stroke-width:2px,color:#fff
 ```
 
 **Advanced PostgreSQL Query Example:**
@@ -641,30 +669,46 @@ GROUP BY dp.user_id;
 
 ```mermaid
 graph TD
-    A[Database Optimization Strategy] --> B[Indexing Strategy]
-    A --> C[Query Optimization]
-    A --> D[Relationship Efficiency]
+    A[🎯 Database Optimization Strategy] --> B[🗂️ Indexing Strategy]
+    A --> C[⚡ Query Optimization]
+    A --> D[🔗 Relationship Efficiency]
     
-    B --> B1[Primary Keys BIGINT AUTO_INCREMENT]
-    B --> B2[Foreign Keys Cascading Constraints]
-    B --> B3[Unique Constraints user_id plus lesson_id]
-    B --> B4[Composite Indexes user_id plus completed_at]
-    B --> B5[JSON Indexes GIN indexes for JSON fields]
+    B --> B1[🔑 Primary Keys BIGINT AUTO_INCREMENT]
+    B --> B2[🔗 Foreign Keys Cascading Constraints]
+    B --> B3[🔒 Unique Constraints user_id plus lesson_id]
+    B --> B4[📊 Composite Indexes user_id plus completed_at]
+    B --> B5[📋 JSON Indexes GIN indexes for JSON fields]
     
-    C --> C1[Window Functions Avoid N plus 1 queries]
-    C --> C2[CTEs Complex logic simplification]
-    C --> C3[Eager Loading with relationships]
-    C --> C4[Query Scopes Reusable query logic]
+    C --> C1[🪟 Window Functions Avoid N plus 1 queries]
+    C --> C2[🔄 CTEs Complex logic simplification]
+    C --> C3[⚡ Eager Loading with relationships]
+    C --> C4[🎯 Query Scopes Reusable query logic]
     
-    D --> D1[HasManyThrough Direct lesson access]
-    D --> D2[BelongsToMany Pivot table optimization]
-    D --> D3[Polymorphic Flexible relationships]
-    D --> D4[Lazy Loading On demand data]
+    D --> D1[🔄 HasManyThrough Direct lesson access]
+    D --> D2[🔗 BelongsToMany Pivot table optimization]
+    D --> D3[🔀 Polymorphic Flexible relationships]
+    D --> D4[💤 Lazy Loading On demand data]
     
-    style A fill:#ff9800
-    style B fill:#2196f3
-    style C fill:#4caf50
-    style D fill:#9c27b0
+    style A fill:#1e40af,stroke:#1e40af,stroke-width:4px,color:#fff
+    style B fill:#dc2626,stroke:#dc2626,stroke-width:3px,color:#fff
+    style C fill:#059669,stroke:#059669,stroke-width:3px,color:#fff
+    style D fill:#7c3aed,stroke:#7c3aed,stroke-width:3px,color:#fff
+    
+    style B1 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style B2 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style B3 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style B4 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    style B5 fill:#ef4444,stroke:#ef4444,stroke-width:2px,color:#fff
+    
+    style C1 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    style C2 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    style C3 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    style C4 fill:#10b981,stroke:#10b981,stroke-width:2px,color:#fff
+    
+    style D1 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D2 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D3 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D4 fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
 ```
 
 **Index Strategy Examples:**
@@ -911,7 +955,8 @@ erDiagram
 
 ```mermaid
 classDiagram
-    %% User and Authentication
+    direction TB
+    
     class User {
         +string name
         +string email
@@ -925,7 +970,6 @@ classDiagram
         +scopeWithCourseProgress()
     }
 
-    %% Course Management
     class Category {
         +string name
         +string slug
@@ -970,7 +1014,6 @@ classDiagram
         +getCompletionRate()
     }
 
-    %% Enrollment and Progress
     class Enrollment {
         +enum status
         +decimal amount_paid
@@ -996,7 +1039,6 @@ classDiagram
         +getCourseProgress()
     }
 
-    %% Assessment System
     class Quiz {
         +string title
         +integer time_limit_minutes
@@ -1040,7 +1082,6 @@ classDiagram
         +grade()
     }
 
-    %% Payment System
     class Transaction {
         +string transaction_id
         +decimal amount
@@ -1055,7 +1096,6 @@ classDiagram
         +markAsCompleted()
     }
 
-    %% Relationships
     User ||--o{ Course : instructs
     User ||--o{ Enrollment : enrolls
     User ||--o{ Progress : tracks
@@ -1083,99 +1123,43 @@ classDiagram
 ### 🗄️ **17 Database Migrations Timeline**
 
 ```mermaid
-timeline
-    title Database Migration Evolution
-    
-    section Core Foundation
-        2025-09-21 11:14:00 : create_categories_table
-                           : Base categorization system
-                           : Slug generation for SEO
-                           : Active inactive states
-        
-        2025-09-21 11:14:54 : create_courses_table
-                            : Complex pricing structure
-                            : Multi-language support
-                            : JSON fields for requirements
-                            : Instructor relationship
-        
-        2025-09-21 11:14:59 : create_modules_table
-                            : Hierarchical course structure
-                            : Order-based organization
-                            : Publication controls
-
-    section Content Structure
-        2025-09-21 11:15:03 : create_lessons_table
-                            : Video URL integration
-                            : Duration tracking
-                            : Ordered content delivery
-        
-        2025-09-21 11:15:09 : create_enrollments_table
-                            : Student-course relationships
-                            : Payment status tracking
-                            : Progress percentage
-                            : Expiration management
-
-    section Progress Tracking
-        2025-09-21 11:15:14 : create_progress_table
-                            : Lesson completion tracking
-                            : Time spent analytics
-                            : Unique constraints
-                            : Performance indexes
-        
-        2025-09-21 11:15:20 : create_reviews_table
-                            : Course rating system
-                            : Student feedback
-        
-        2025-09-21 11:15:26 : create_payments_table
-                            : Initial payment structure
-
-    section Authentication
-        2025-09-21 11:39:56 : create_personal_access_tokens_table
-                            : Laravel Sanctum integration
-                            : API authentication
-                            : Token management
-                            : Ability-based permissions
-
-    section Financial System
-        2025-09-21 12:16:23 : create_transactions_table
-                            : Advanced payment processing
-                            : Multiple payment gateways
-                            : Transaction status tracking
-                            : Gateway response storage
-                            : Failure reason logging
-
-    section Assessment System
-        2025-09-21 13:18:29 : create_quizzes_table
-                            : Time-limited assessments
-                            : Attempt limitations
-                            : Passing score thresholds
-                            : Availability windows
-        
-        2025-09-21 13:18:50 : create_quiz_questions_table
-                            : Multiple question types
-                            : JSON answer storage
-                            : Points allocation
-                            : Order positioning
-        
-        2025-09-21 13:19:15 : create_quiz_attempts_table
-                            : Attempt tracking
-                            : Score calculation
-                            : Time monitoring
-                            : Status management
-        
-        2025-09-21 13:19:36 : create_quiz_answers_table
-                            : Individual answer storage
-                            : Auto-grading results
-                            : Feedback generation
-                            : Points calculation
-
-    section User Foundation
-        0001-01-01 00:00:00 : create_users_table
-                           : Multi-role authentication
-                           : Email verification
-                           : Profile management
-                           : Remember tokens
+gitgraph
+    commit id: "Users Table"
+    commit id: "Categories"
+    commit id: "Courses"
+    commit id: "Modules"
+    commit id: "Lessons"
+    commit id: "Enrollments"
+    commit id: "Progress"
+    commit id: "Reviews"
+    commit id: "Payments"
+    commit id: "Sanctum Tokens"
+    commit id: "Transactions"
+    commit id: "Quizzes"
+    commit id: "Quiz Questions"
+    commit id: "Quiz Attempts"
+    commit id: "Quiz Answers"
 ```
+
+**Migration Details:**
+
+| **Order** | **Migration** | **Purpose** | **Key Features** |
+|-----------|---------------|-------------|------------------|
+| 1 | `create_users_table` | Multi-role authentication | Email verification, role-based access |
+| 2 | `create_categories_table` | Course categorization | SEO-friendly slugs, active states |
+| 3 | `create_courses_table` | Course management | Pricing, JSON fields, instructor relations |
+| 4 | `create_modules_table` | Course structure | Hierarchical organization, ordering |
+| 5 | `create_lessons_table` | Content delivery | Video integration, duration tracking |
+| 6 | `create_enrollments_table` | Student registration | Payment status, progress tracking |
+| 7 | `create_progress_table` | Learning analytics | Time tracking, completion status |
+| 8 | `create_reviews_table` | Course feedback | Rating system, student reviews |
+| 9 | `create_payments_table` | Payment processing | Transaction management |
+| 10 | `create_personal_access_tokens_table` | API authentication | Laravel Sanctum integration |
+| 11 | `create_transactions_table` | Advanced payments | Gateway integration, status tracking |
+| 12 | `create_quizzes_table` | Assessment system | Time limits, attempt controls |
+| 13 | `create_quiz_questions_table` | Question management | Multiple types, JSON storage |
+| 14 | `create_quiz_attempts_table` | Attempt tracking | Scoring, timing, status |
+| 15 | `create_quiz_answers_table` | Answer storage | Auto-grading, feedback |
 
 ### 🏗️ **Database Schema Highlights**
 
