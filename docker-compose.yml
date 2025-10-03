@@ -26,6 +26,25 @@ services:
     depends_on:
       - postgres
       - redis
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_DATABASE=lms_db
+      - DB_USERNAME=laravel
+      - DB_PASSWORD=laravel
+      - REDIS_HOST=redis
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
+    depends_on:
+      - app
 
 volumes:
   postgres_data:
