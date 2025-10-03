@@ -11,15 +11,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Users, 
-  BookOpen, 
-  DollarSign, 
+import {
+  Users,
+  BookOpen,
+  DollarSign,
   Activity,
   TrendingUp,
   UserPlus,
   Settings,
-  Shield
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -32,27 +31,67 @@ export default function AdminDashboard() {
     totalRevenue: 45670,
     activeUsers: 892,
     newUsersThisMonth: 134,
-    coursesPublishedThisMonth: 12
+    coursesPublishedThisMonth: 12,
   };
 
   const recentUsers = [
-    { id: 1, name: "John Doe", email: "john@example.com", role: "student", joinDate: "2 hours ago" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "instructor", joinDate: "1 day ago" },
-    { id: 3, name: "Mike Johnson", email: "mike@example.com", role: "student", joinDate: "2 days ago" },
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      role: "student",
+      joinDate: "2 hours ago",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      role: "instructor",
+      joinDate: "1 day ago",
+    },
+    {
+      id: 3,
+      name: "Mike Johnson",
+      email: "mike@example.com",
+      role: "student",
+      joinDate: "2 days ago",
+    },
   ];
 
   const recentCourses = [
-    { id: 1, title: "Advanced React Patterns", instructor: "Sarah Wilson", status: "pending", submittedDate: "1 hour ago" },
-    { id: 2, title: "Machine Learning Basics", instructor: "David Chen", status: "approved", submittedDate: "3 hours ago" },
-    { id: 3, title: "Web Security Fundamentals", instructor: "Emily Brown", status: "under_review", submittedDate: "1 day ago" },
+    {
+      id: 1,
+      title: "Advanced React Patterns",
+      instructor: "Sarah Wilson",
+      status: "pending",
+      submittedDate: "1 hour ago",
+    },
+    {
+      id: 2,
+      title: "Machine Learning Basics",
+      instructor: "David Chen",
+      status: "approved",
+      submittedDate: "3 hours ago",
+    },
+    {
+      id: 3,
+      title: "Web Security Fundamentals",
+      instructor: "Emily Brown",
+      status: "under_review",
+      submittedDate: "1 day ago",
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "approved": return "bg-green-100 text-green-800";
-      case "pending": return "bg-yellow-100 text-yellow-800";
-      case "under_review": return "bg-blue-100 text-blue-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "approved":
+        return "bg-green-100 text-green-800";
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "under_review":
+        return "bg-blue-100 text-blue-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -67,7 +106,8 @@ export default function AdminDashboard() {
                 Admin Dashboard
               </h1>
               <p className="text-gray-600 mt-1">
-                Welcome back, {user?.name}! Manage your platform and monitor activity.
+                Welcome back, {user?.name}! Manage your platform and monitor
+                activity.
               </p>
             </div>
             <div className="flex space-x-3">
@@ -90,8 +130,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <Users className="h-6 w-6 text-blue-600" />
                 <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-600">Total Users</p>
-                  <p className="text-lg font-bold">{platformStats.totalUsers}</p>
+                  <p className="text-xs font-medium text-gray-600">
+                    Total Users
+                  </p>
+                  <p className="text-lg font-bold">
+                    {platformStats.totalUsers}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -102,8 +146,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <Activity className="h-6 w-6 text-green-600" />
                 <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-600">Active Users</p>
-                  <p className="text-lg font-bold">{platformStats.activeUsers}</p>
+                  <p className="text-xs font-medium text-gray-600">
+                    Active Users
+                  </p>
+                  <p className="text-lg font-bold">
+                    {platformStats.activeUsers}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -115,7 +163,9 @@ export default function AdminDashboard() {
                 <UserPlus className="h-6 w-6 text-purple-600" />
                 <div className="ml-3">
                   <p className="text-xs font-medium text-gray-600">New Users</p>
-                  <p className="text-lg font-bold">{platformStats.newUsersThisMonth}</p>
+                  <p className="text-lg font-bold">
+                    {platformStats.newUsersThisMonth}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -126,8 +176,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <BookOpen className="h-6 w-6 text-orange-600" />
                 <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-600">Total Courses</p>
-                  <p className="text-lg font-bold">{platformStats.totalCourses}</p>
+                  <p className="text-xs font-medium text-gray-600">
+                    Total Courses
+                  </p>
+                  <p className="text-lg font-bold">
+                    {platformStats.totalCourses}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -138,8 +192,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <TrendingUp className="h-6 w-6 text-indigo-600" />
                 <div className="ml-3">
-                  <p className="text-xs font-medium text-gray-600">New Courses</p>
-                  <p className="text-lg font-bold">{platformStats.coursesPublishedThisMonth}</p>
+                  <p className="text-xs font-medium text-gray-600">
+                    New Courses
+                  </p>
+                  <p className="text-lg font-bold">
+                    {platformStats.coursesPublishedThisMonth}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -151,7 +209,9 @@ export default function AdminDashboard() {
                 <DollarSign className="h-6 w-6 text-green-600" />
                 <div className="ml-3">
                   <p className="text-xs font-medium text-gray-600">Revenue</p>
-                  <p className="text-lg font-bold">${platformStats.totalRevenue}</p>
+                  <p className="text-lg font-bold">
+                    ${platformStats.totalRevenue}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -176,7 +236,10 @@ export default function AdminDashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {recentUsers.map((user) => (
-                    <div key={user.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div
+                      key={user.id}
+                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    >
                       <div className="flex items-center space-x-4">
                         <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
                           <Users className="h-5 w-5 text-blue-600" />
@@ -185,17 +248,23 @@ export default function AdminDashboard() {
                           <p className="font-medium">{user.name}</p>
                           <p className="text-sm text-gray-600">{user.email}</p>
                         </div>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          user.role === 'instructor' 
-                            ? 'bg-purple-100 text-purple-800' 
-                            : 'bg-blue-100 text-blue-800'
-                        }`}>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            user.role === "instructor"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-blue-100 text-blue-800"
+                          }`}
+                        >
                           {user.role}
                         </span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-500">{user.joinDate}</span>
-                        <Button variant="outline" size="sm">View</Button>
+                        <span className="text-sm text-gray-500">
+                          {user.joinDate}
+                        </span>
+                        <Button variant="outline" size="sm">
+                          View
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -215,22 +284,35 @@ export default function AdminDashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {recentCourses.map((course) => (
-                    <div key={course.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div
+                      key={course.id}
+                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    >
                       <div className="flex items-center space-x-4">
                         <div className="h-10 w-10 bg-orange-100 rounded-full flex items-center justify-center">
                           <BookOpen className="h-5 w-5 text-orange-600" />
                         </div>
                         <div>
                           <p className="font-medium">{course.title}</p>
-                          <p className="text-sm text-gray-600">by {course.instructor}</p>
+                          <p className="text-sm text-gray-600">
+                            by {course.instructor}
+                          </p>
                         </div>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(course.status)}`}>
-                          {course.status.replace('_', ' ')}
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                            course.status
+                          )}`}
+                        >
+                          {course.status.replace("_", " ")}
                         </span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-500">{course.submittedDate}</span>
-                        <Button variant="outline" size="sm">Review</Button>
+                        <span className="text-sm text-gray-500">
+                          {course.submittedDate}
+                        </span>
+                        <Button variant="outline" size="sm">
+                          Review
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -250,7 +332,9 @@ export default function AdminDashboard() {
               <CardContent>
                 <div className="text-center py-12">
                   <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">Advanced analytics dashboard coming soon...</p>
+                  <p className="text-gray-600">
+                    Advanced analytics dashboard coming soon...
+                  </p>
                 </div>
               </CardContent>
             </Card>

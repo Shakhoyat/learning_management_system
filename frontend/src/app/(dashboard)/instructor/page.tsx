@@ -12,15 +12,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  BookOpen, 
-  Users, 
-  DollarSign, 
-  TrendingUp, 
+import {
+  BookOpen,
+  Users,
+  DollarSign,
+  TrendingUp,
   Plus,
   Eye,
   Edit3,
-  BarChart3
+  BarChart3,
 } from "lucide-react";
 
 export default function InstructorDashboard() {
@@ -35,7 +35,7 @@ export default function InstructorDashboard() {
       revenue: 2850,
       avgRating: 4.7,
       status: "published",
-      completionRate: 78
+      completionRate: 78,
     },
     {
       id: 2,
@@ -44,7 +44,7 @@ export default function InstructorDashboard() {
       revenue: 1780,
       avgRating: 4.5,
       status: "published",
-      completionRate: 65
+      completionRate: 65,
     },
     {
       id: 3,
@@ -53,33 +53,33 @@ export default function InstructorDashboard() {
       revenue: 240,
       avgRating: 0,
       status: "draft",
-      completionRate: 0
-    }
+      completionRate: 0,
+    },
   ];
 
   const stats = {
     totalStudents: myCourses.reduce((acc, course) => acc + course.students, 0),
     totalRevenue: myCourses.reduce((acc, course) => acc + course.revenue, 0),
     totalCourses: myCourses.length,
-    avgRating: 4.6
+    avgRating: 4.6,
   };
 
   const recentActivity = [
     {
       type: "enrollment",
       message: "5 new students enrolled in Introduction to React",
-      timestamp: "2 hours ago"
+      timestamp: "2 hours ago",
     },
     {
       type: "review",
       message: "New 5-star review on Advanced JavaScript",
-      timestamp: "4 hours ago"
+      timestamp: "4 hours ago",
     },
     {
       type: "completion",
       message: "Student completed Introduction to React",
-      timestamp: "1 day ago"
-    }
+      timestamp: "1 day ago",
+    },
   ];
 
   return (
@@ -93,7 +93,8 @@ export default function InstructorDashboard() {
                 Instructor Dashboard
               </h1>
               <p className="text-gray-600 mt-1">
-                Welcome back, {user?.name}! Manage your courses and track your success.
+                Welcome back, {user?.name}! Manage your courses and track your
+                success.
               </p>
             </div>
             <Button className="flex items-center">
@@ -110,7 +111,9 @@ export default function InstructorDashboard() {
               <div className="flex items-center">
                 <Users className="h-8 w-8 text-blue-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Students</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Students
+                  </p>
                   <p className="text-2xl font-bold">{stats.totalStudents}</p>
                 </div>
               </div>
@@ -122,7 +125,9 @@ export default function InstructorDashboard() {
               <div className="flex items-center">
                 <DollarSign className="h-8 w-8 text-green-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Revenue
+                  </p>
                   <p className="text-2xl font-bold">${stats.totalRevenue}</p>
                 </div>
               </div>
@@ -134,7 +139,9 @@ export default function InstructorDashboard() {
               <div className="flex items-center">
                 <BookOpen className="h-8 w-8 text-purple-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Courses</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Courses
+                  </p>
                   <p className="text-2xl font-bold">{stats.totalCourses}</p>
                 </div>
               </div>
@@ -146,7 +153,9 @@ export default function InstructorDashboard() {
               <div className="flex items-center">
                 <TrendingUp className="h-8 w-8 text-yellow-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Avg. Rating</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Avg. Rating
+                  </p>
                   <p className="text-2xl font-bold">{stats.avgRating}</p>
                 </div>
               </div>
@@ -169,44 +178,57 @@ export default function InstructorDashboard() {
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-semibold">{course.title}</h3>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            course.status === 'published' 
-                              ? 'bg-green-100 text-green-800' 
-                              : 'bg-yellow-100 text-yellow-800'
-                          }`}>
+                          <h3 className="text-lg font-semibold">
+                            {course.title}
+                          </h3>
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              course.status === "published"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-yellow-100 text-yellow-800"
+                            }`}
+                          >
                             {course.status}
                           </span>
                         </div>
-                        
+
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                           <div>
                             <p className="text-sm text-gray-600">Students</p>
-                            <p className="text-xl font-bold">{course.students}</p>
+                            <p className="text-xl font-bold">
+                              {course.students}
+                            </p>
                           </div>
                           <div>
                             <p className="text-sm text-gray-600">Revenue</p>
-                            <p className="text-xl font-bold">${course.revenue}</p>
+                            <p className="text-xl font-bold">
+                              ${course.revenue}
+                            </p>
                           </div>
                           <div>
                             <p className="text-sm text-gray-600">Rating</p>
                             <p className="text-xl font-bold">
-                              {course.avgRating > 0 ? course.avgRating : 'N/A'}
+                              {course.avgRating > 0 ? course.avgRating : "N/A"}
                             </p>
                           </div>
                           <div>
                             <p className="text-sm text-gray-600">Completion</p>
-                            <p className="text-xl font-bold">{course.completionRate}%</p>
+                            <p className="text-xl font-bold">
+                              {course.completionRate}%
+                            </p>
                           </div>
                         </div>
 
                         {course.completionRate > 0 && (
                           <div className="mt-4">
-                            <Progress value={course.completionRate} className="w-full" />
+                            <Progress
+                              value={course.completionRate}
+                              className="w-full"
+                            />
                           </div>
                         )}
                       </div>
-                      
+
                       <div className="ml-6 flex space-x-2">
                         <Button variant="outline" size="sm">
                           <Eye className="h-4 w-4 mr-2" />
@@ -239,7 +261,9 @@ export default function InstructorDashboard() {
               <CardContent>
                 <div className="text-center py-12">
                   <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600">Advanced analytics coming soon...</p>
+                  <p className="text-gray-600">
+                    Advanced analytics coming soon...
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -256,7 +280,10 @@ export default function InstructorDashboard() {
               <CardContent>
                 <div className="space-y-4">
                   {recentActivity.map((activity, index) => (
-                    <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg"
+                    >
                       <div className="flex-shrink-0">
                         <div className="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
                           <Users className="h-4 w-4 text-blue-600" />
