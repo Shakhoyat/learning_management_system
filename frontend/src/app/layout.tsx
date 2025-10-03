@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LMS Platform - Learn Anything, Anywhere",
+  title: "EduNova - The best LMS for personalised learning",
   description:
-    "A modern Learning Management System built with Next.js and Laravel",
+    "Create engaging learning experiences with our customisable learning management system. Teach the way you want, learn the way you need.",
 };
 
 export default function RootLayout({
