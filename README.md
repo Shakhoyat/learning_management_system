@@ -1007,11 +1007,11 @@ classDiagram
         +string name
         +string email
         +enum role
-        +coursesAsInstructor() HasMany
-        +enrollments() HasMany
-        +progress() HasMany
-        +quizAttempts() HasMany
-        +transactions() HasMany
+        +coursesAsInstructor()
+        +enrollments()
+        +progress()
+        +quizAttempts()
+        +transactions()
         +scopeInstructors()
         +scopeWithCourseProgress()
     }
@@ -1019,21 +1019,21 @@ classDiagram
     class Category {
         +string name
         +string slug
-        +courses() HasMany
-        +activeCourses() HasMany
+        +courses()
+        +activeCourses()
     }
 
     class Course {
         +string title
         +decimal price
         +decimal discount_price
-        +instructor() BelongsTo
-        +category() BelongsTo
-        +modules() HasMany
-        +lessons() HasManyThrough
-        +enrollments() HasMany
-        +students() BelongsToMany
-        +transactions() HasMany
+        +instructor()
+        +category()
+        +modules()
+        +lessons()
+        +enrollments()
+        +students()
+        +transactions()
         +getEffectivePrice()
         +getProgressForUser()
         +getCompletionStatistics()
@@ -1043,8 +1043,8 @@ classDiagram
     class Module {
         +string title
         +integer order
-        +course() BelongsTo
-        +lessons() HasMany
+        +course()
+        +lessons()
         +getTotalDurationAttribute()
     }
 
@@ -1052,10 +1052,10 @@ classDiagram
         +string title
         +text content
         +integer duration_minutes
-        +module() BelongsTo
-        +course() HasOneThrough
-        +progress() HasMany
-        +quizzes() HasMany
+        +module()
+        +course()
+        +progress()
+        +quizzes()
         +isCompletedBy()
         +getCompletionRate()
     }
@@ -1064,10 +1064,10 @@ classDiagram
         +enum status
         +decimal amount_paid
         +integer progress_percentage
-        +user() BelongsTo
-        +course() BelongsTo
-        +transactions() HasMany
-        +progress() HasMany
+        +user()
+        +course()
+        +transactions()
+        +progress()
         +isActive()
         +isCompleted()
         +isPaid()
@@ -1076,8 +1076,8 @@ classDiagram
     class Progress {
         +timestamp completed_at
         +integer time_spent
-        +user() BelongsTo
-        +lesson() BelongsTo
+        +user()
+        +lesson()
         +markAsCompleted()
         +isCompleted()
         +getUserProgressAnalytics()
@@ -1089,9 +1089,9 @@ classDiagram
         +string title
         +integer time_limit_minutes
         +decimal passing_score
-        +lesson() BelongsTo
-        +questions() HasMany
-        +attempts() HasMany
+        +lesson()
+        +questions()
+        +attempts()
         +canUserTake()
         +getAverageScore()
     }
@@ -1102,8 +1102,8 @@ classDiagram
         +json options
         +json correct_answers
         +decimal points
-        +quiz() BelongsTo
-        +answers() HasMany
+        +quiz()
+        +answers()
         +checkAnswer()
     }
 
@@ -1112,9 +1112,9 @@ classDiagram
         +decimal score
         +boolean is_passed
         +json answers
-        +quiz() BelongsTo
-        +user() BelongsTo
-        +quizAnswers() HasMany
+        +quiz()
+        +user()
+        +quizAnswers()
         +calculateScore()
         +isCompleted()
     }
@@ -1123,8 +1123,8 @@ classDiagram
         +json answer
         +boolean is_correct
         +decimal points_earned
-        +quizAttempt() BelongsTo
-        +quizQuestion() BelongsTo
+        +quizAttempt()
+        +quizQuestion()
         +grade()
     }
 
@@ -1133,9 +1133,9 @@ classDiagram
         +decimal amount
         +enum status
         +json gateway_response
-        +user() BelongsTo
-        +course() BelongsTo
-        +enrollment() BelongsTo
+        +user()
+        +course()
+        +enrollment()
         +isSuccessful()
         +isPending()
         +hasFailed()
@@ -1170,7 +1170,7 @@ classDiagram
 
 ```mermaid
 gitgraph
-    commit id: "Users Table"
+    commit id: "Users_Table"
     commit id: "Categories"
     commit id: "Courses"
     commit id: "Modules"
@@ -1179,12 +1179,14 @@ gitgraph
     commit id: "Progress"
     commit id: "Reviews"
     commit id: "Payments"
-    commit id: "Sanctum Tokens"
+    commit id: "Sanctum_Tokens"
     commit id: "Transactions"
     commit id: "Quizzes"
-    commit id: "Quiz Questions"
-    commit id: "Quiz Attempts"
-    commit id: "Quiz Answers"
+    commit id: "Quiz_Questions"
+    commit id: "Quiz_Attempts"
+    commit id: "Quiz_Answers"
+    commit id: "Personal_Access_Tokens"
+    commit id: "Job_Batches"
 ```
 
 **Migration Details:**
