@@ -476,59 +476,61 @@ class Lesson extends Model
 }
 ```
 
-### 🔥 **Advanced Eloquent Features Showcase**
+### **Advanced Eloquent Features Showcase**
 
 ```mermaid
 mindmap
-  root((🎯 Eloquent Mastery))
-    🏗️ Model Features
-      🔧 Accessors and Mutators
+  root((Eloquent Mastery))
+    Model Features
+      Accessors and Mutators
         getTotalLessonsAttribute
         getEffectivePrice
         setPasswordAttribute
-      🎯 Query Scopes
+      Query Scopes
         scopeInstructors
         scopePublished
         scopeWithProgress
-      ⚡ Model Events
+      Model Events
         creating
         updated
         deleting
-    🔗 Relationship Features
-      ⚡ Eager Loading
+    Relationship Features
+      Eager Loading
         with modules lessons
         load progress lesson
-      🚀 Lazy Eager Loading
+      Lazy Eager Loading
         loadMissing
         loadCount
-      🎯 Relationship Queries
+      Relationship Queries
         whereHas
         withCount
         withAvg
-    🧠 Advanced Queries
-      ⚙️ Raw Expressions
+    Advanced Queries
+      Raw Expressions
         DB raw
         selectRaw
         whereRaw
-      🔍 Subqueries
+      Subqueries
         where function
         whereIn Model select
-      📊 Window Functions
+      Window Functions
         ROW_NUMBER OVER
         LAG OVER
         PARTITION BY
-    🚀 Performance
-      💾 Database Transactions
+    Performance Optimization
+      Database Transactions
         DB transaction
         beginTransaction
-      ⚡ Query Optimization
+      Query Optimization
         select specific columns
         chunk large datasets
         cursor memory efficient
-      🗄️ Caching Strategy
+      Caching Strategy
         remember
         forever
         flush
+
+%%{init: {"mindmap": {"theme": "dark", "themeVariables": {"primaryColor": "#0f172a", "primaryTextColor": "#ffffff", "primaryBorderColor": "#334155", "lineColor": "#64748b", "secondaryColor": "#1e293b", "tertiaryColor": "#334155", "background": "#0f172a", "mainBkg": "#1e293b", "secondBkg": "#334155", "tertiaryBkg": "#475569"}}}}%%
 ```
 
 ### ✅ **Core Framework Features**
