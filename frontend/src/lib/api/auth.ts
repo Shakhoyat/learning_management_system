@@ -1,4 +1,4 @@
-import { apiClient } from './client';
+import { apiClient } from "./client";
 
 export interface LoginCredentials {
   email: string;
@@ -10,14 +10,14 @@ export interface RegisterData {
   email: string;
   password: string;
   password_confirmation: string;
-  role?: 'student' | 'instructor';
+  role?: "student" | "instructor";
 }
 
 export interface User {
   id: number;
   name: string;
   email: string;
-  role: 'student' | 'instructor' | 'admin';
+  role: "student" | "instructor" | "admin";
   email_verified_at: string | null;
   created_at: string;
   updated_at: string;
@@ -31,26 +31,26 @@ export interface AuthResponse {
 
 export const authApi = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-    const response = await apiClient.post('/auth/login', credentials);
+    const response = await apiClient.post("/auth/login", credentials);
     return response.data;
   },
 
   register: async (data: RegisterData): Promise<AuthResponse> => {
-    const response = await apiClient.post('/auth/register', data);
+    const response = await apiClient.post("/auth/register", data);
     return response.data;
   },
 
   logout: async (): Promise<void> => {
-    await apiClient.post('/auth/logout');
+    await apiClient.post("/auth/logout");
   },
 
   me: async (): Promise<User> => {
-    const response = await apiClient.get('/auth/me');
+    const response = await apiClient.get("/auth/me");
     return response.data;
   },
 
   refreshToken: async (): Promise<AuthResponse> => {
-    const response = await apiClient.post('/auth/refresh');
+    const response = await apiClient.post("/auth/refresh");
     return response.data;
   },
 };
