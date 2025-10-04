@@ -53,14 +53,17 @@ export default function CourseDetailPage() {
       const response = await coursesApi.getCourse(Number(id));
       if (response.success) {
         setCourse(response.data);
-        
+
         // Check if user is enrolled (if authenticated)
         if (isAuthenticated) {
           try {
-            const enrollmentsResponse = await coursesApi.student.getEnrollments();
+            const enrollmentsResponse =
+              await coursesApi.student.getEnrollments();
             if (enrollmentsResponse.success) {
               const isUserEnrolled = enrollmentsResponse.data.some(
-                enrollment => enrollment.course_id === Number(id) && enrollment.status === 'active'
+                (enrollment) =>
+                  enrollment.course_id === Number(id) &&
+                  enrollment.status === "active"
               );
               setIsEnrolled(isUserEnrolled);
             }
@@ -89,7 +92,7 @@ export default function CourseDetailPage() {
 
     try {
       setEnrolling(true);
-      
+
       // For free courses, enroll directly
       if (course?.price === 0) {
         const response = await coursesApi.student.enrollCourse(Number(id));
@@ -111,13 +114,17 @@ export default function CourseDetailPage() {
             cvv: "123",
           },
         };
-        
-        const response = await coursesApi.student.enrollCourse(Number(id), paymentDetails);
+
+        const response = await coursesApi.student.enrollCourse(
+          Number(id),
+          paymentDetails
+        );
         if (response.success) {
           setIsEnrolled(true);
           toast({
             title: "Enrollment Successful!",
-            description: "Payment processed and you've been enrolled in the course.",
+            description:
+              "Payment processed and you've been enrolled in the course.",
           });
         }
       }
@@ -125,7 +132,8 @@ export default function CourseDetailPage() {
       console.error("Enrollment error:", error);
       toast({
         title: "Enrollment Failed",
-        description: error.response?.data?.message || "Failed to enroll in course",
+        description:
+          error.response?.data?.message || "Failed to enroll in course",
         variant: "destructive",
       });
     } finally {
@@ -143,7 +151,9 @@ export default function CourseDetailPage() {
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Loading course details...</p>
+            <p className="mt-4 text-muted-foreground">
+              Loading course details...
+            </p>
           </div>
         </div>
       </div>
@@ -155,7 +165,9 @@ export default function CourseDetailPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Course Not Found</h1>
-          <p className="text-muted-foreground mb-4">The course you're looking for doesn't exist.</p>
+          <p className="text-muted-foreground mb-4">
+            The course you're looking for doesn't exist.
+          </p>
           <Button asChild>
             <Link href="/student">Back to Dashboard</Link>
           </Button>
@@ -167,11 +179,7 @@ export default function CourseDetailPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Back Button */}
-      <Button
-        variant="ghost"
-        className="mb-6"
-        onClick={() => router.back()}
-      >
+      <Button variant="ghost" className="mb-6" onClick={() => router.back()}>
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back
       </Button>
@@ -185,7 +193,15 @@ export default function CourseDetailPage() {
               <div className="flex items-start justify-between">
                 <div className="space-y-2">
                   <div className="flex items-center space-x-2">
-                    <Badge variant={course.level === "beginner" ? "secondary" : course.level === "intermediate" ? "default" : "destructive"}>
+                    <Badge
+                      variant={
+                        course.level === "beginner"
+                          ? "secondary"
+                          : course.level === "intermediate"
+                          ? "default"
+                          : "destructive"
+                      }
+                    >
                       {course.level}
                     </Badge>
                     <Badge variant="outline">{course.category?.name}</Badge>
@@ -209,7 +225,11 @@ export default function CourseDetailPage() {
                     </div>
                     <div className="flex items-center">
                       <BookOpen className="mr-1 h-4 w-4" />
-                      {course.modules?.reduce((acc, module) => acc + (module.lessons?.length || 0), 0)} lessons
+                      {course.modules?.reduce(
+                        (acc, module) => acc + (module.lessons?.length || 0),
+                        0
+                      )}{" "}
+                      lessons
                     </div>
                   </div>
                 </div>
@@ -230,7 +250,12 @@ export default function CourseDetailPage() {
                 <CardHeader>
                   <CardTitle>Course Curriculum</CardTitle>
                   <CardDescription>
-                    {course.modules?.length} modules • {course.modules?.reduce((acc, module) => acc + (module.lessons?.length || 0), 0)} lessons
+                    {course.modules?.length} modules •{" "}
+                    {course.modules?.reduce(
+                      (acc, module) => acc + (module.lessons?.length || 0),
+                      0
+                    )}{" "}
+                    lessons
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -246,7 +271,10 @@ export default function CourseDetailPage() {
                       )}
                       <div className="space-y-2">
                         {module.lessons?.map((lesson, lessonIndex) => (
-                          <div key={lesson.id} className="flex items-center justify-between py-2 px-3 bg-muted/50 rounded">
+                          <div
+                            key={lesson.id}
+                            className="flex items-center justify-between py-2 px-3 bg-muted/50 rounded"
+                          >
                             <div className="flex items-center space-x-2">
                               {lesson.is_free || isEnrolled ? (
                                 <Play className="h-4 w-4 text-green-600" />
@@ -255,7 +283,9 @@ export default function CourseDetailPage() {
                               )}
                               <span className="text-sm">{lesson.title}</span>
                               {lesson.is_free && !isEnrolled && (
-                                <Badge variant="secondary" className="text-xs">Free</Badge>
+                                <Badge variant="secondary" className="text-xs">
+                                  Free
+                                </Badge>
                               )}
                             </div>
                             <div className="flex items-center text-xs text-muted-foreground">
@@ -284,10 +314,15 @@ export default function CourseDetailPage() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="font-medium text-lg">{course.instructor?.name}</h3>
-                      <p className="text-muted-foreground">{course.instructor?.email}</p>
+                      <h3 className="font-medium text-lg">
+                        {course.instructor?.name}
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {course.instructor?.email}
+                      </p>
                       <p className="mt-2 text-sm">
-                        Experienced instructor with expertise in {course.category?.name.toLowerCase()}.
+                        Experienced instructor with expertise in{" "}
+                        {course.category?.name.toLowerCase()}.
                       </p>
                     </div>
                   </div>
@@ -301,7 +336,9 @@ export default function CourseDetailPage() {
                   <CardTitle>Student Reviews</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">No reviews yet. Be the first to review this course!</p>
+                  <p className="text-muted-foreground">
+                    No reviews yet. Be the first to review this course!
+                  </p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -322,12 +359,14 @@ export default function CourseDetailPage() {
                     {course.price === 0 ? "Free" : `$${course.price}`}
                   </div>
                   {course.price > 0 && (
-                    <p className="text-sm text-muted-foreground">One-time payment</p>
+                    <p className="text-sm text-muted-foreground">
+                      One-time payment
+                    </p>
                   )}
                 </div>
 
                 {isEnrolled ? (
-                  <Button 
+                  <Button
                     onClick={handleStartLearning}
                     className="w-full"
                     size="lg"
@@ -336,7 +375,7 @@ export default function CourseDetailPage() {
                     Continue Learning
                   </Button>
                 ) : (
-                  <Button 
+                  <Button
                     onClick={handleEnroll}
                     disabled={enrolling}
                     className="w-full"
@@ -381,17 +420,24 @@ export default function CourseDetailPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Duration</span>
-                <span className="text-sm font-medium">{course.duration} hours</span>
+                <span className="text-sm font-medium">
+                  {course.duration} hours
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Lessons</span>
                 <span className="text-sm font-medium">
-                  {course.modules?.reduce((acc, module) => acc + (module.lessons?.length || 0), 0)}
+                  {course.modules?.reduce(
+                    (acc, module) => acc + (module.lessons?.length || 0),
+                    0
+                  )}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Category</span>
-                <span className="text-sm font-medium">{course.category?.name}</span>
+                <span className="text-sm font-medium">
+                  {course.category?.name}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Language</span>

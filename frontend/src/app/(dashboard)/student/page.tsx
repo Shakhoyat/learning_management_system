@@ -62,11 +62,12 @@ export default function StudentDashboard() {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [enrolledResponse, coursesResponse, categoriesResponse] = await Promise.all([
-        coursesApi.student.getEnrolledCourses(),
-        coursesApi.getCourses(),
-        coursesApi.getCategories(),
-      ]);
+      const [enrolledResponse, coursesResponse, categoriesResponse] =
+        await Promise.all([
+          coursesApi.student.getEnrolledCourses(),
+          coursesApi.getCourses(),
+          coursesApi.getCategories(),
+        ]);
 
       if (enrolledResponse.success) {
         setEnrolledCourses(enrolledResponse.data);
@@ -85,20 +86,32 @@ export default function StudentDashboard() {
   };
 
   const filteredCourses = allCourses.filter((course) => {
-    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch =
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       course.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || course.category_id.toString() === selectedCategory;
-    const matchesLevel = selectedLevel === "all" || course.level === selectedLevel;
-    const notEnrolled = !enrolledCourses.some(enrolled => enrolled.id === course.id);
-    
+    const matchesCategory =
+      selectedCategory === "all" ||
+      course.category_id.toString() === selectedCategory;
+    const matchesLevel =
+      selectedLevel === "all" || course.level === selectedLevel;
+    const notEnrolled = !enrolledCourses.some(
+      (enrolled) => enrolled.id === course.id
+    );
+
     return matchesSearch && matchesCategory && matchesLevel && notEnrolled;
   });
 
   // Student stats
   const studentStats = {
     totalCourses: enrolledCourses.length,
-    completedCourses: enrolledCourses.filter(c => c.progress?.progress_percentage === 100).length,
-    totalHoursLearned: enrolledCourses.reduce((acc, course) => acc + (course.progress?.time_spent_minutes || 0), 0) / 60,
+    completedCourses: enrolledCourses.filter(
+      (c) => c.progress?.progress_percentage === 100
+    ).length,
+    totalHoursLearned:
+      enrolledCourses.reduce(
+        (acc, course) => acc + (course.progress?.time_spent_minutes || 0),
+        0
+      ) / 60,
     streak: 5,
   };
 
@@ -130,7 +143,9 @@ export default function StudentDashboard() {
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Loading your dashboard...</p>
+            <p className="mt-4 text-muted-foreground">
+              Loading your dashboard...
+            </p>
           </div>
         </div>
       </DashboardLayout>
@@ -144,13 +159,19 @@ export default function StudentDashboard() {
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-lg p-6 text-white">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold">Welcome back, {user?.name}!</h1>
-              <p className="text-blue-100 mt-1">Continue your learning journey</p>
+              <h1 className="text-2xl font-bold">
+                Welcome back, {user?.name}!
+              </h1>
+              <p className="text-blue-100 mt-1">
+                Continue your learning journey
+              </p>
             </div>
             <div className="text-right">
               <div className="flex items-center space-x-2 text-blue-100">
                 <Flame className="h-5 w-5" />
-                <span className="text-sm">Streak: {studentStats.streak} days</span>
+                <span className="text-sm">
+                  Streak: {studentStats.streak} days
+                </span>
               </div>
             </div>
           </div>
@@ -163,8 +184,12 @@ export default function StudentDashboard() {
               <div className="flex items-center">
                 <BookOpen className="h-8 w-8 text-blue-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Enrolled Courses</p>
-                  <p className="text-2xl font-bold">{studentStats.totalCourses}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Enrolled Courses
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {studentStats.totalCourses}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -175,8 +200,12 @@ export default function StudentDashboard() {
               <div className="flex items-center">
                 <Trophy className="h-8 w-8 text-yellow-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Completed</p>
-                  <p className="text-2xl font-bold">{studentStats.completedCourses}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Completed
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {studentStats.completedCourses}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -187,8 +216,12 @@ export default function StudentDashboard() {
               <div className="flex items-center">
                 <Clock className="h-8 w-8 text-green-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Hours Learned</p>
-                  <p className="text-2xl font-bold">{Math.round(studentStats.totalHoursLearned)}</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Hours Learned
+                  </p>
+                  <p className="text-2xl font-bold">
+                    {Math.round(studentStats.totalHoursLearned)}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -199,7 +232,9 @@ export default function StudentDashboard() {
               <div className="flex items-center">
                 <Target className="h-8 w-8 text-purple-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-muted-foreground">Daily Goal</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Daily Goal
+                  </p>
                   <p className="text-2xl font-bold">75%</p>
                 </div>
               </div>
@@ -227,14 +262,20 @@ export default function StudentDashboard() {
               <Card>
                 <CardContent className="p-8 text-center">
                   <GraduationCap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No Enrolled Courses</h3>
+                  <h3 className="text-lg font-medium mb-2">
+                    No Enrolled Courses
+                  </h3>
                   <p className="text-muted-foreground mb-4">
                     Start your learning journey by enrolling in a course
                   </p>
-                  <Button onClick={() => {
-                    const discoverTab = document.querySelector('[value="discover"]') as HTMLElement;
-                    discoverTab?.click();
-                  }}>
+                  <Button
+                    onClick={() => {
+                      const discoverTab = document.querySelector(
+                        '[value="discover"]'
+                      ) as HTMLElement;
+                      discoverTab?.click();
+                    }}
+                  >
                     Discover Courses
                   </Button>
                 </CardContent>
@@ -242,12 +283,17 @@ export default function StudentDashboard() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {enrolledCourses.map((course) => (
-                  <Card key={course.id} className="hover:shadow-md transition-shadow">
+                  <Card
+                    key={course.id}
+                    className="hover:shadow-md transition-shadow"
+                  >
                     <CardHeader className="pb-2">
                       <div className="aspect-video bg-gradient-to-br from-blue-100 to-indigo-100 rounded-md mb-2 flex items-center justify-center">
                         <BookOpen className="h-8 w-8 text-blue-600" />
                       </div>
-                      <CardTitle className="text-base">{course.title}</CardTitle>
+                      <CardTitle className="text-base">
+                        {course.title}
+                      </CardTitle>
                       <CardDescription className="text-sm">
                         by {course.instructor?.name}
                       </CardDescription>
@@ -256,12 +302,25 @@ export default function StudentDashboard() {
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
                           <span>Progress</span>
-                          <span>{course.progress?.progress_percentage || 0}%</span>
+                          <span>
+                            {course.progress?.progress_percentage || 0}%
+                          </span>
                         </div>
-                        <Progress value={course.progress?.progress_percentage || 0} className="h-2" />
+                        <Progress
+                          value={course.progress?.progress_percentage || 0}
+                          className="h-2"
+                        />
                         <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>{course.progress?.completed_lessons || 0} / {course.progress?.total_lessons || 0} lessons</span>
-                          <span>{Math.round((course.progress?.time_spent_minutes || 0) / 60)}h studied</span>
+                          <span>
+                            {course.progress?.completed_lessons || 0} /{" "}
+                            {course.progress?.total_lessons || 0} lessons
+                          </span>
+                          <span>
+                            {Math.round(
+                              (course.progress?.time_spent_minutes || 0) / 60
+                            )}
+                            h studied
+                          </span>
                         </div>
                       </div>
                     </CardContent>
@@ -302,14 +361,20 @@ export default function StudentDashboard() {
                   className="pl-10"
                 />
               </div>
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Categories</SelectItem>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id.toString()}>
+                    <SelectItem
+                      key={category.id}
+                      value={category.id.toString()}
+                    >
                       {category.name}
                     </SelectItem>
                   ))}
@@ -331,14 +396,27 @@ export default function StudentDashboard() {
             {/* Course Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredCourses.map((course) => (
-                <Card key={course.id} className="hover:shadow-md transition-shadow">
+                <Card
+                  key={course.id}
+                  className="hover:shadow-md transition-shadow"
+                >
                   <CardHeader className="pb-2">
                     <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-md mb-2 flex items-center justify-center">
                       <BookOpen className="h-8 w-8 text-gray-600" />
                     </div>
                     <div className="flex justify-between items-start">
-                      <CardTitle className="text-base">{course.title}</CardTitle>
-                      <Badge variant={course.level === "beginner" ? "secondary" : course.level === "intermediate" ? "default" : "destructive"}>
+                      <CardTitle className="text-base">
+                        {course.title}
+                      </CardTitle>
+                      <Badge
+                        variant={
+                          course.level === "beginner"
+                            ? "secondary"
+                            : course.level === "intermediate"
+                            ? "default"
+                            : "destructive"
+                        }
+                      >
                         {course.level}
                       </Badge>
                     </div>
@@ -376,7 +454,8 @@ export default function StudentDashboard() {
                   <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-medium mb-2">No Courses Found</h3>
                   <p className="text-muted-foreground">
-                    Try adjusting your search criteria or explore different categories
+                    Try adjusting your search criteria or explore different
+                    categories
                   </p>
                 </CardContent>
               </Card>
@@ -400,7 +479,9 @@ export default function StudentDashboard() {
                     <div className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium">{activity.message}</p>
+                        <p className="text-sm font-medium">
+                          {activity.message}
+                        </p>
                         <p className="text-xs text-muted-foreground mt-1">
                           {activity.course} • {activity.time}
                         </p>
@@ -415,7 +496,9 @@ export default function StudentDashboard() {
               <Card>
                 <CardContent className="p-8 text-center">
                   <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No Recent Activity</h3>
+                  <h3 className="text-lg font-medium mb-2">
+                    No Recent Activity
+                  </h3>
                   <p className="text-muted-foreground">
                     Start learning to see your activity here
                   </p>

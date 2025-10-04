@@ -42,7 +42,7 @@ export default function CourseBrowsePage() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
-  
+
   const [courses, setCourses] = useState<Course[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
@@ -72,7 +72,9 @@ export default function CourseBrowsePage() {
       setLoading(true);
       const [categoriesResponse, enrolledResponse] = await Promise.all([
         coursesApi.getCategories(),
-        isAuthenticated ? coursesApi.student.getEnrolledCourses() : Promise.resolve({ success: true, data: [] })
+        isAuthenticated
+          ? coursesApi.student.getEnrolledCourses()
+          : Promise.resolve({ success: true, data: [] }),
       ]);
 
       if (categoriesResponse.success) {
@@ -104,7 +106,8 @@ export default function CourseBrowsePage() {
 
       const response = await coursesApi.getCourses({
         search: searchTerm || undefined,
-        category_id: selectedCategory !== "all" ? parseInt(selectedCategory) : undefined,
+        category_id:
+          selectedCategory !== "all" ? parseInt(selectedCategory) : undefined,
         level: selectedLevel !== "all" ? selectedLevel : undefined,
         page,
         per_page: 12,
@@ -112,11 +115,11 @@ export default function CourseBrowsePage() {
 
       if (response.success) {
         const newCourses = response.data;
-        
+
         if (reset) {
           setCourses(newCourses);
         } else {
-          setCourses(prev => [...prev, ...newCourses]);
+          setCourses((prev) => [...prev, ...newCourses]);
         }
 
         // Check if there are more pages
@@ -148,12 +151,14 @@ export default function CourseBrowsePage() {
   };
 
   const filteredCourses = courses.filter((course) => {
-    const notEnrolled = !enrolledCourses.some(enrolled => enrolled.id === course.id);
+    const notEnrolled = !enrolledCourses.some(
+      (enrolled) => enrolled.id === course.id
+    );
     return notEnrolled;
   });
 
   const isEnrolled = (courseId: number) => {
-    return enrolledCourses.some(enrolled => enrolled.id === courseId);
+    return enrolledCourses.some((enrolled) => enrolled.id === courseId);
   };
 
   if (loading) {
@@ -174,10 +179,7 @@ export default function CourseBrowsePage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-          >
+          <Button variant="ghost" onClick={() => router.back()}>
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
@@ -188,7 +190,7 @@ export default function CourseBrowsePage() {
             </p>
           </div>
         </div>
-        
+
         <div className="flex items-center space-x-2">
           <Button
             variant={viewMode === "grid" ? "default" : "outline"}
@@ -266,8 +268,18 @@ export default function CourseBrowsePage() {
                   <BookOpen className="h-8 w-8 text-gray-600" />
                 </div>
                 <div className="flex justify-between items-start">
-                  <CardTitle className="text-base line-clamp-1">{course.title}</CardTitle>
-                  <Badge variant={course.level === "beginner" ? "secondary" : course.level === "intermediate" ? "default" : "destructive"}>
+                  <CardTitle className="text-base line-clamp-1">
+                    {course.title}
+                  </CardTitle>
+                  <Badge
+                    variant={
+                      course.level === "beginner"
+                        ? "secondary"
+                        : course.level === "intermediate"
+                        ? "default"
+                        : "destructive"
+                    }
+                  >
                     {course.level}
                   </Badge>
                 </div>
@@ -321,8 +333,18 @@ export default function CourseBrowsePage() {
                     <div className="flex items-start justify-between">
                       <div>
                         <div className="flex items-center space-x-2 mb-1">
-                          <h3 className="text-lg font-semibold">{course.title}</h3>
-                          <Badge variant={course.level === "beginner" ? "secondary" : course.level === "intermediate" ? "default" : "destructive"}>
+                          <h3 className="text-lg font-semibold">
+                            {course.title}
+                          </h3>
+                          <Badge
+                            variant={
+                              course.level === "beginner"
+                                ? "secondary"
+                                : course.level === "intermediate"
+                                ? "default"
+                                : "destructive"
+                            }
+                          >
                             {course.level}
                           </Badge>
                         </div>

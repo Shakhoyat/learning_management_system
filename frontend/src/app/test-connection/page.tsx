@@ -13,7 +13,10 @@ export default function ConnectionTestPage() {
   const testConnection = async () => {
     setLoading(true);
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api" + "/categories");
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL ||
+          "http://localhost:8000/api" + "/categories"
+      );
       if (response.ok) {
         const data = await response.json();
         setStatus(`✅ Connected! Found ${data.data?.length || 0} categories`);
@@ -22,7 +25,9 @@ export default function ConnectionTestPage() {
           description: "Backend API is responding correctly",
         });
       } else {
-        setStatus(`❌ Connection failed: ${response.status} ${response.statusText}`);
+        setStatus(
+          `❌ Connection failed: ${response.status} ${response.statusText}`
+        );
         toast({
           title: "Connection Failed",
           description: `HTTP ${response.status}: ${response.statusText}`,
@@ -44,25 +49,31 @@ export default function ConnectionTestPage() {
   const testAuth = async () => {
     setLoading(true);
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api" + "/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name: "Test Student",
-          email: "student@test.com",
-          password: "password123",
-          password_confirmation: "password123",
-          role: "student",
-        }),
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_URL ||
+          "http://localhost:8000/api" + "/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: "Test Student",
+            email: "student@test.com",
+            password: "password123",
+            password_confirmation: "password123",
+            role: "student",
+          }),
+        }
+      );
 
       const data = await response.json();
-      
+
       if (response.ok) {
-        setStatus(`✅ Auth test successful! Token: ${data.token?.substring(0, 20)}...`);
+        setStatus(
+          `✅ Auth test successful! Token: ${data.token?.substring(0, 20)}...`
+        );
         toast({
           title: "Auth Test Successful",
           description: "Registration endpoint is working",
@@ -95,24 +106,25 @@ export default function ConnectionTestPage() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">
-              API URL: {process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}
+              API URL:{" "}
+              {process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}
             </p>
             <p className="text-sm font-mono bg-muted p-2 rounded">
               Status: {status}
             </p>
           </div>
-          
+
           <div className="space-y-2">
-            <Button 
-              onClick={testConnection} 
+            <Button
+              onClick={testConnection}
               disabled={loading}
               className="w-full"
             >
               {loading ? "Testing..." : "Test Backend Connection"}
             </Button>
-            
-            <Button 
-              onClick={testAuth} 
+
+            <Button
+              onClick={testAuth}
               disabled={loading}
               variant="outline"
               className="w-full"

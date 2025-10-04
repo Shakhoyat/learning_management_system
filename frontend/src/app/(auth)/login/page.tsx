@@ -31,12 +31,16 @@ export default function LoginPage() {
     setError("");
 
     try {
+      console.log("Attempting login with:", email, password);
       const user = await login(email, password);
+      console.log("Login successful:", user);
 
       // Redirect based on user role
       const dashboardRoute = getRoleDashboard(user.role);
       router.push(dashboardRoute);
     } catch (err: any) {
+      console.error("Login error:", err);
+      console.error("Error response:", err.response);
       setError(
         err.response?.data?.message || "Login failed. Please try again."
       );

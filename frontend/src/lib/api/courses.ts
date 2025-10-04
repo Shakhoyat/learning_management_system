@@ -104,17 +104,21 @@ export const coursesApi = {
   getCourses: async (filters?: CourseFilters): Promise<CoursesResponse> => {
     const params = new URLSearchParams();
     if (filters?.search) params.append("search", filters.search);
-    if (filters?.category_id) params.append("category_id", filters.category_id.toString());
+    if (filters?.category_id)
+      params.append("category_id", filters.category_id.toString());
     if (filters?.level) params.append("level", filters.level);
     if (filters?.page) params.append("page", filters.page.toString());
-    if (filters?.per_page) params.append("per_page", filters.per_page.toString());
+    if (filters?.per_page)
+      params.append("per_page", filters.per_page.toString());
 
     const response = await apiClient.get(`/courses?${params.toString()}`);
     return response.data;
   },
 
   // Get course details (public)
-  getCourse: async (id: number): Promise<{ success: boolean; data: Course }> => {
+  getCourse: async (
+    id: number
+  ): Promise<{ success: boolean; data: Course }> => {
     const response = await apiClient.get(`/courses/${id}`);
     return response.data;
   },
@@ -128,37 +132,57 @@ export const coursesApi = {
   // Student specific endpoints
   student: {
     // Get enrolled courses
-    getEnrolledCourses: async (): Promise<{ success: boolean; data: Course[] }> => {
+    getEnrolledCourses: async (): Promise<{
+      success: boolean;
+      data: Course[];
+    }> => {
       const response = await apiClient.get("/student/courses");
       return response.data;
     },
 
     // Get enrollments
-    getEnrollments: async (): Promise<{ success: boolean; data: Enrollment[] }> => {
+    getEnrollments: async (): Promise<{
+      success: boolean;
+      data: Enrollment[];
+    }> => {
       const response = await apiClient.get("/student/enrollments");
       return response.data;
     },
 
     // Enroll in a course
-    enrollCourse: async (courseId: number, paymentDetails?: any): Promise<{
+    enrollCourse: async (
+      courseId: number,
+      paymentDetails?: any
+    ): Promise<{
       success: boolean;
       message: string;
       enrollment: Enrollment;
       transaction?: any;
     }> => {
-      const response = await apiClient.post(`/student/courses/${courseId}/enroll`, paymentDetails);
+      const response = await apiClient.post(
+        `/student/courses/${courseId}/enroll`,
+        paymentDetails
+      );
       return response.data;
     },
 
     // Get course progress
-    getCourseProgress: async (courseId: number): Promise<{ success: boolean; data: CourseProgress }> => {
-      const response = await apiClient.get(`/student/courses/${courseId}/progress`);
+    getCourseProgress: async (
+      courseId: number
+    ): Promise<{ success: boolean; data: CourseProgress }> => {
+      const response = await apiClient.get(
+        `/student/courses/${courseId}/progress`
+      );
       return response.data;
     },
 
     // Complete a lesson
-    completeLesson: async (lessonId: number): Promise<{ success: boolean; message: string }> => {
-      const response = await apiClient.post(`/student/lessons/${lessonId}/complete`);
+    completeLesson: async (
+      lessonId: number
+    ): Promise<{ success: boolean; message: string }> => {
+      const response = await apiClient.post(
+        `/student/lessons/${lessonId}/complete`
+      );
       return response.data;
     },
 

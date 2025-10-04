@@ -31,6 +31,7 @@ services:
       - DB_USERNAME=laravel
       - DB_PASSWORD=laravel
       - REDIS_HOST=redis
+      - SESSION_DRIVER=file
 
   frontend:
     build: ./frontend

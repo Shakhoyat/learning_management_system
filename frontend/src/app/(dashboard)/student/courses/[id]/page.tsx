@@ -41,7 +41,7 @@ export default function LessonPlayerPage() {
   const router = useRouter();
   const { user } = useAuth();
   const { toast } = useToast();
-  
+
   const [course, setCourse] = useState<Course | null>(null);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
@@ -53,19 +53,19 @@ export default function LessonPlayerPage() {
   // Keyboard navigation hook
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' && !e.ctrlKey && !e.metaKey) {
+      if (e.key === "ArrowRight" && !e.ctrlKey && !e.metaKey) {
         navigateToNext();
       }
-      if (e.key === 'ArrowLeft' && !e.ctrlKey && !e.metaKey) {
+      if (e.key === "ArrowLeft" && !e.ctrlKey && !e.metaKey) {
         navigateToPrevious();
       }
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setSidebarOpen(!sidebarOpen);
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [currentLessonIndex, allLessons.length, sidebarOpen]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function LessonPlayerPage() {
       setLoading(true);
       const [courseResponse, progressResponse] = await Promise.all([
         coursesApi.getCourse(Number(id)),
-        coursesApi.student.getCourseProgress(Number(id))
+        coursesApi.student.getCourseProgress(Number(id)),
       ]);
 
       if (courseResponse.success) {
@@ -88,17 +88,17 @@ export default function LessonPlayerPage() {
 
         // Flatten all lessons from all modules
         const lessons: Lesson[] = [];
-        courseData.modules?.forEach(module => {
-          module.lessons?.forEach(lesson => {
+        courseData.modules?.forEach((module) => {
+          module.lessons?.forEach((lesson) => {
             lessons.push({
               ...lesson,
-              moduleTitle: module.title
+              moduleTitle: module.title,
             } as Lesson & { moduleTitle: string });
           });
         });
-        
+
         setAllLessons(lessons);
-        
+
         // Set first lesson as current if available
         if (lessons.length > 0) {
           setCurrentLesson(lessons[0]);
@@ -108,9 +108,10 @@ export default function LessonPlayerPage() {
 
       if (progressResponse.success) {
         // Extract completed lesson IDs from progress data
-        const completed = progressResponse.data.module_progress?.flatMap(
-          moduleProgress => moduleProgress.completed_lessons || []
-        ) || [];
+        const completed =
+          progressResponse.data.module_progress?.flatMap(
+            (moduleProgress) => moduleProgress.completed_lessons || []
+          ) || [];
         setCompletedLessons(completed);
       }
     } catch (error) {
@@ -145,14 +146,16 @@ export default function LessonPlayerPage() {
     if (!currentLesson) return;
 
     try {
-      const response = await coursesApi.student.completeLesson(currentLesson.id);
+      const response = await coursesApi.student.completeLesson(
+        currentLesson.id
+      );
       if (response.success) {
-        setCompletedLessons(prev => [...prev, currentLesson.id]);
+        setCompletedLessons((prev) => [...prev, currentLesson.id]);
         toast({
           title: "Lesson Completed!",
           description: "Great job! Keep up the learning momentum.",
         });
-        
+
         // Auto-navigate to next lesson
         setTimeout(() => {
           navigateToNext();
@@ -161,7 +164,8 @@ export default function LessonPlayerPage() {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.response?.data?.message || "Failed to mark lesson as complete",
+        description:
+          error.response?.data?.message || "Failed to mark lesson as complete",
         variant: "destructive",
       });
     }
@@ -181,7 +185,9 @@ export default function LessonPlayerPage() {
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading course content...</p>
+          <p className="mt-4 text-muted-foreground">
+            Loading course content...
+          </p>
         </div>
       </div>
     );
@@ -203,10 +209,12 @@ export default function LessonPlayerPage() {
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
-      <div className={cn(
-        "bg-card border-r transition-all duration-300 overflow-hidden",
-        sidebarOpen ? "w-80" : "w-0"
-      )}>
+      <div
+        className={cn(
+          "bg-card border-r transition-all duration-300 overflow-hidden",
+          sidebarOpen ? "w-80" : "w-0"
+        )}
+      >
         <div className="p-4 border-b">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold truncate">{course.title}</h2>
@@ -221,7 +229,9 @@ export default function LessonPlayerPage() {
           <div className="mt-2 space-y-2">
             <div className="flex justify-between text-sm text-muted-foreground">
               <span>Progress</span>
-              <span>{completedCount}/{totalLessons} lessons</span>
+              <span>
+                {completedCount}/{totalLessons} lessons
+              </span>
             </div>
             <Progress value={courseProgress} className="h-2" />
             <p className="text-xs text-muted-foreground">
@@ -248,17 +258,21 @@ export default function LessonPlayerPage() {
                 <AccordionContent className="pb-0">
                   <div className="space-y-1">
                     {module.lessons?.map((lesson) => {
-                      const lessonIndex = allLessons.findIndex(l => l.id === lesson.id);
+                      const lessonIndex = allLessons.findIndex(
+                        (l) => l.id === lesson.id
+                      );
                       const isActive = currentLesson?.id === lesson.id;
                       const isCompleted = completedLessons.includes(lesson.id);
-                      
+
                       return (
                         <button
                           key={lesson.id}
                           onClick={() => selectLesson(lesson, lessonIndex)}
                           className={cn(
                             "w-full text-left px-4 py-3 hover:bg-muted/50 transition-colors border-l-2 flex items-center justify-between",
-                            isActive ? "border-l-primary bg-muted" : "border-l-transparent",
+                            isActive
+                              ? "border-l-primary bg-muted"
+                              : "border-l-transparent"
                           )}
                         >
                           <div className="flex items-center space-x-2 flex-1 min-w-0">
@@ -267,7 +281,9 @@ export default function LessonPlayerPage() {
                             ) : (
                               <Play className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                             )}
-                            <span className="text-sm truncate">{lesson.title}</span>
+                            <span className="text-sm truncate">
+                              {lesson.title}
+                            </span>
                           </div>
                           <div className="flex items-center text-xs text-muted-foreground">
                             <Clock className="mr-1 h-3 w-3" />
@@ -301,13 +317,13 @@ export default function LessonPlayerPage() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => router.push('/student')}
+              onClick={() => router.push("/student")}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Dashboard
             </Button>
           </div>
-          
+
           <div className="flex items-center space-x-4">
             <div className="text-sm text-muted-foreground">
               Lesson {currentLessonIndex + 1} of {totalLessons}
@@ -420,8 +436,8 @@ export default function LessonPlayerPage() {
               <Card className="bg-muted/50">
                 <CardContent className="p-4">
                   <p className="text-sm text-muted-foreground text-center">
-                    💡 <strong>Tip:</strong> Use arrow keys (← →) to navigate between lessons, 
-                    or press Escape to toggle the sidebar
+                    💡 <strong>Tip:</strong> Use arrow keys (← →) to navigate
+                    between lessons, or press Escape to toggle the sidebar
                   </p>
                 </CardContent>
               </Card>

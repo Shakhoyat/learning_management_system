@@ -31,7 +31,9 @@ export interface AuthResponse {
 
 export const authApi = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
+    console.log("Making login request to:", "/auth/login", credentials);
     const response = await apiClient.post("/auth/login", credentials);
+    console.log("Login response:", response.data);
     return response.data;
   },
 
